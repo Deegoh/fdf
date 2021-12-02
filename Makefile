@@ -16,19 +16,19 @@ APPKIT = -framework AppKit
 
 FRAMEWORK = $(OPENGL) $(APPKIT)\
 
-LIB = $(MLXFLAGS)
+LIB = $(MLXFLAGS) -lm
 
 all: libx $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(LIB) $(FRAMEWORK) $(OBJ) -o $(NAME)
-
+exec: all
+	./$(NAME)
 libx:
 	@$(MAKE) -sC $(MINILIBX_DIR)
-
 clean:
 	rm -rf $(OBJ)
-
+	@$(MAKE) clean -sC $(MINILIBX_DIR)
 fclean: clean
 	rm -rf $(NAME)
 

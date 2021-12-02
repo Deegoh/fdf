@@ -2,6 +2,8 @@
 # define FDF_H
 
 # include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
 # include "./minilibx_macos/mlx.h"
 
 typedef struct	s_data {
@@ -11,5 +13,10 @@ typedef struct	s_data {
 	int		line_lenght;
 	int		endian;
 }				t_data;
+
+typedef struct  s_vars {
+    void    *mlx;
+    void    *win;
+}               t_vars;
 
 #endif
