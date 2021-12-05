@@ -33,6 +33,12 @@ int key_hook(int keycode, t_vars *vars)
 	return (0);
 }
 
+int closeWin(t_vars *vars)
+{
+	mlx_destroy_window(vars->mlx, vars->win);
+	exit(0);
+}
+
 int mouse_hook(int mousecode, t_vars *vars)
 {
 	(void)vars;
@@ -78,15 +84,16 @@ int	main(void)
 	t_data	img;
 
 	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 200, 200, "Hello fdf!");
-	img.img = mlx_new_image(mlx.mlx, 200, 200);
+	mlx.win = mlx_new_window(mlx.mlx, 500, 500, "Hello fdf!");
+	img.img = mlx_new_image(mlx.mlx, 500, 500);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 		&img.line_lenght, &img.endian);
 	square(img, 50, 50, 100, 0x00000FF);
-	circle(img, 100, 100, 50, 0x0000FF00);
+	circle(img, 250, 250, 200, 0x0000FF00);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, img.img, 0, 0);
 //	mlx_key_hook(mlx.win, key_hook, &mlx);
 	mlx_hook(mlx.win, 2, 1L<<0, key_hook, &mlx);
+	mlx_hook(mlx.win, 17, 0, closeWin, &mlx);
 	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
 	mlx_loop(mlx.mlx);
 }
