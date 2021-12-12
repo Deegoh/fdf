@@ -1,37 +1,47 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Imlx
+CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
-SRC = fdf.c
+SRC = fdf.c\
+	  read_map.c
 OBJ = $(SRC:.c=.o)
 
 MAP_DIR = test_maps/
 
 MINILIBX_DIR = ./minilibx_macos/
-MLXFLAGS = -L$(MINILIBX_DIR) -lmlx
 
-INCLUDES = -I$(MINILIBX_DIR)
+LIBFT_DIR = ./libft/
 
-OPENGL = -framework OpenGL
-APPKIT = -framework AppKit
+INCLUDES = -I$(MINILIBX_DIR) -I$(LIBFT_DIR)
 
-FRAMEWORK = $(OPENGL) $(APPKIT)\
+FRAMEWORK = -framework OpenGL -framework AppKit
 
-LIB = $(MLXFLAGS) -lm
+LIB = -lmlx -lm -lft -L $(MINILIBX_DIR) -L $(LIBFT_DIR)
 
-all: libx $(NAME)
+all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(LIB) $(FRAMEWORK) $(OBJ) -o $(NAME)
+$(NAME): libx libft $(OBJ)
+	$(CC) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME) -g
 exec: all
-	./$(NAME)
+	./$(NAME) test_maps/42.fdf
+leak: all
+	valgrind --leak-check=full\
+			 --show-leak-kinds=all\
+			 --track-origins=yes\
+			 --verbose\
+			 --log-file=valgrind-out.txt\
+			 ./$(NAME) test_maps/42.fdf
 libx:
 	@$(MAKE) -sC $(MINILIBX_DIR)
+libft:
+	@$(MAKE) -C $(LIBFT_DIR)
 clean:
 	rm -rf $(OBJ)
-	@$(MAKE) clean -sC $(MINILIBX_DIR)
+	@$(MAKE) -sC $(MINILIBX_DIR) clean
+	@$(MAKE) -sC $(LIBFT_DIR) clean
 fclean: clean
 	rm -rf $(NAME)
+	@$(MAKE) -sC $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re compile
+.PHONY: all clean fclean re compile libft minilibx

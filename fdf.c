@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/11/29 09:01:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:23:58 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int key_hook(int keycode, t_vars *vars)
 {
+	printf("p:%p\n", vars->mlx);
 	printf("keycode:%d\n", keycode);
 	if (keycode == 53)
 	{
@@ -39,61 +40,67 @@ int closeWin(t_vars *vars)
 	exit(0);
 }
 
-int mouse_hook(int mousecode, t_vars *vars)
+int mouse_hook(int mousecode, int x, int y, t_vars *vars)
 {
 	(void)vars;
+//	printf("p:%p\n", vars->mlx); //segfault
 	printf("mouseCode:%d\n", mousecode);
+	printf("x:%d\n", x);
+	printf("y:%d\n", y);
 	return (0);
 }
 
-void square(t_data img, int x, int y, int size, int color)
+void drawLine(t_data img, int beginX, int beginY, int endX, int endY, int color)
 {
-	int large;
+	double deltaX;
+	double deltaY;
+	double pixelX;
+	double pixelY;
+	int pixels;
 
-	large = size;
-	while (size--)
+	deltaX = endX - beginX;
+	deltaY = endY - beginY;
+	pixelX = beginX;
+	pixelY = beginY;
+	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+	deltaX /= pixels;
+	deltaY /= pixels;
+	while (pixels)
 	{
-		my_mlx_pixel_put(&img, size + x, y, color);
-		my_mlx_pixel_put(&img, size + x, y + large, color);
-		my_mlx_pixel_put(&img, x, size + y, color);
-		my_mlx_pixel_put(&img, x + large, size + y, color);
+		my_mlx_pixel_put(&img, pixelX, pixelY, color);
+		pixelX += deltaX;
+		pixelY += deltaY;
+		--pixels;
 	}
 }
-
-void circle(t_data img, int x, int y, int radius, int color)
+void    initWin(t_vars *img, int size_x, int size_y, int inter)
 {
-	double xpos;
-	double ypos;
-	int angle;
-	int i;
-
-	i = 0;
-	while (i < 360)
-	{
-		angle = i;
-		xpos = radius * cos(angle * M_PI / 180);
-		ypos = radius * sin(angle * M_PI / 180);
-		my_mlx_pixel_put(&img, x + xpos, y + ypos, color);
-		i++;
-	}
+	img->x = size_x;
+	img->y = size_y;
+	img->inter = inter;
 }
 
-int	main(void)
+int main(int ac, char *av[])
 {
-	t_vars  mlx;
+	t_vars mlx;
 	t_data	img;
+	char *map;
 
+	map = ft_strdup("");
+	if (ac == 2)
+		read_map(av[1], &map);
+	printf("map:\n%s\n", map);
 	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 500, 500, "Hello fdf!");
-	img.img = mlx_new_image(mlx.mlx, 500, 500);
+	initWin(&mlx, 500,500, 50);
+	mlx.win = mlx_new_window(mlx.mlx, mlx.x, mlx.y, "Hello fdf!");
+	img.img = mlx_new_image(mlx.mlx, mlx.x, mlx.y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 		&img.line_lenght, &img.endian);
-	square(img, 50, 50, 100, 0x00000FF);
-	circle(img, 250, 250, 200, 0x0000FF00);
-	mlx_put_image_to_window(mlx.mlx, mlx.win, img.img, 0, 0);
-//	mlx_key_hook(mlx.win, key_hook, &mlx);
+	drawLine(img, 0, 0, 500, 500, 0x00FFFFFF);
 	mlx_hook(mlx.win, 2, 1L<<0, key_hook, &mlx);
 	mlx_hook(mlx.win, 17, 0, closeWin, &mlx);
-	mlx_mouse_hook(mlx.win, mouse_hook, &mlx);
+	mlx_hook(mlx.win, 5, 0, mouse_hook, &mlx);
+	mlx_put_image_to_window(mlx.mlx, mlx.win, img.img, 0, 0);
 	mlx_loop(mlx.mlx);
+	return (0);
 }
