@@ -139,7 +139,7 @@ void drawLine(t_data img, int beginX, int beginY, int endX, int endY, int color)
 		--pixels;
 	}
 }
-
+/*
 int main(void)
 {
 	t_vars mlx;
@@ -160,3 +160,4 @@ int main(void)
 	mlx_hook(mlx.win, 5, 0, mouse_hook, &mlx);
 	mlx_loop(mlx.mlx);
 }
+*/

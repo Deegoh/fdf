@@ -2,7 +2,9 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
 SRC = fdf.c\
-	  read_map.c
+	  read_map.c\
+	  set_hook.c\
+	  draw.c
 OBJ = $(SRC:.c=.o)
 
 MAP_DIR = test_maps/
