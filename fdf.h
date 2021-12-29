@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
+/*   Updated: 2021/12/28 23:41:03 by tpinto-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef FDF_H
 # define FDF_H
 
@@ -17,7 +28,9 @@ typedef struct s_data {
 	int		y;
 	int		scale;
 	char	*map;
-	int		line;
+	int		**wire;
+	int		xlen;
+	int		ylen;
 }				t_data;
 
 typedef struct s_vars {
@@ -25,14 +38,22 @@ typedef struct s_vars {
 	void	*win;
 }				t_vars;
 
-int	read_map(char *file, t_data *d);
-int	count_line(const char *tmp);
+typedef struct s_point {
+	int		x;
+	int		y;
+	int		z;
+	int		color;
+}				t_point;
+
+int		read_map(char *file, t_data *d);
+int		count_line(const char *tmp);
 void	process_map(t_data *d);
-int	close_win(t_vars *vars);
+void	draw_map_cart(t_data *data);
+int		close_win(t_vars *vars);
 
 void	set_hooks(t_vars *vars);
 
-void	draw_line(t_data img, int bx, int by, int endX, int endY, int color);
+void	draw_line(t_data d, int bx, int by, int endX, int endY, int color);
 void	square(t_data img, int posX, int posY, int x, int y, int color);
 void	circle1(t_data img, int xc, int yc, int r, int color);
 void	circle2(t_data img, int xc, int yc, int radius, int color);

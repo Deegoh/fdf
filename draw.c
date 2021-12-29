@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/15 19:15:00 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/12/29 01:39:15 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
+	dst = data->adr + (y * data->line_len + x * (data->bits / 8));
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line(t_data img, int bx, int by, int endX, int endY, int color)
+void	draw_line(t_data data, int bx, int by, int endX, int endY, int color)
 {
 	double	deltax;
 	double	deltay;
@@ -35,9 +35,9 @@ void	draw_line(t_data img, int bx, int by, int endX, int endY, int color)
 	pixels = (int)sqrt((deltax * deltax) + (deltay * deltay));
 	deltax /= pixels;
 	deltay /= pixels;
-	while (pixels)
+	while (pixels + 1)
 	{
-		my_mlx_pixel_put(&img, (int)pixelx, (int)pixely, color);
+		my_mlx_pixel_put(&data, (int)pixelx, (int)pixely, color);
 		pixelx += deltax;
 		pixely += deltay;
 		--pixels;
@@ -111,5 +111,39 @@ void	circle1(t_data img, int xc, int yc, int r, int color)
 			d = d + (4 * x) - (4 * y--) + 10;
 		x = x + 1;
 		eight_way_plot(img, xc, yc, x, y, color);
+	}
+}
+
+void	draw_map_cart(t_data *data)
+{
+	int	i;
+	int	j;
+	int	x;
+	int	y;
+	int	s;
+
+	j = 0;
+	s = data->scale;
+	while (j < data->ylen)
+	{
+		i = 0;
+		while (i < data->xlen - 1)
+		{
+			x = i * s + s;
+			y = j * s + s;
+			draw_line(*data, x, y, x + s, y, 0x00FFFFFF);
+			draw_line(*data, x, y + s, x + s, y + s, 0x00FFFFFF);
+			draw_line(*data, x, y, x, y + s, 0x00FFFFFF);
+			draw_line(*data, x + s, y, x + s, y + s, 0x00FFFFFF);
+			if (data->wire[j][i])
+			{
+				draw_line( *data, x, y + s, x + s / 2, y + s - data->wire[j][i] * 10, 0x00FFFFFF);
+				draw_line( *data, x + s, y + s, x + s / 2, y + s - data->wire[j][i] * 10, 0x00FFFFFF);
+				draw_line( *data, x, y, x + s / 2, y + s - data->wire[j][i] * 10, 0x00FFFFFF);
+				draw_line( *data, x + s, y, x + s / 2, y + s - data->wire[j][i] * 10, 0x00FFFFFF);
+			}
+			i++;
+		}
+		j++;
 	}
 }

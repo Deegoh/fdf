@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/23 13:18:10 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/12/28 21:12:55 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	read_map(char *file, t_data *d)
 	{
 		tmp = get_next_line(fd);
 		if (count_line(tmp))
-			d->line_len = count_line(tmp);
+		{
+			if (line > 0 && d->xlen != count_line(tmp))
+				printf("invalide map / readmap()\n");
+			d->xlen = count_line(tmp);
+		}
 		if (!tmp)
 			return (line);
 		help = d->map;
@@ -79,27 +83,58 @@ int	count_line(const char *tmp)
 	return (count);
 }
 
-//void	process_map(t_data *d)
-//{
-//	char	**new_map;
-//	int		i;
-//	int		j;
-//
-//	new_map = malloc(d->line * sizeof(char *));
-//	if (!*new_map)
-//		return ;
-//	i = 0;
-//	j = 0;
-//	while (j < d->line)
-//	{
-//		new_map = malloc(d->line * sizeof(char *));
-//		if (!new_map)
-//			return ;
-//		while (i < d->line_len)
-//		{
-//			new_map[j][i] = atoi(d->map);
-//			i++;
-//		}
-//		j++;
-//	}
-//}
+int	test_line(const char *tmp, int *i)
+{
+	int	ret;
+
+	if (!tmp)
+		return (0);
+	ret = 0;
+	while (tmp[*i] == ' ')
+	{
+		*i = *i + 1;
+	}
+	if (ft_atoi((tmp + *i)))
+	{
+		ret = ft_atoi((tmp + *i));
+		*i += ft_nbtlen(tmp[*i]);
+	}
+	else if (ft_atoi((tmp + *i)) == 0)
+	{
+		*i = *i + 1;
+	}
+//	printf("%d ", ret);
+	return (ret);
+}
+
+void	process_map(t_data *d)
+{
+	int	**new_map;
+	int	i;
+	int	j;
+	int	k;
+
+	new_map = malloc(d->ylen * sizeof(int *));
+	if (!*new_map)
+		return ;
+	j = 0;
+	k = 0;
+	while (j < d->ylen)
+	{
+		i = 0;
+		new_map[j] = malloc(d->xlen * sizeof(int));
+		if (!new_map[j])
+			return ;
+		while (i < d->xlen)
+		{
+			new_map[j][i] = test_line(d->map, &k);
+//			printf("[%d]", new_map[j][i]);
+//			if (new_map[j][i] == 0)
+//				printf(" ");
+			i++;
+		}
+//		printf("\n");
+		j++;
+	}
+	d->wire = new_map;
+}
