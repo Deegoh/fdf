@@ -3,8 +3,11 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
 SRC = fdf.c\
 	  read_map.c\
+	  sort_map.c\
+	  error.c\
 	  set_hook.c\
-	  draw.c
+	  draw.c\
+	  draw_bonus.c
 OBJ = $(SRC:.c=.o)
 
 MAP_DIR = test_maps/
@@ -35,7 +38,7 @@ leak: all
 libx:
 	@$(MAKE) -sC $(MINILIBX_DIR)
 libft:
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -sC $(LIBFT_DIR)
 clean:
 	rm -rf $(OBJ)
 	@$(MAKE) -sC $(MINILIBX_DIR) clean

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/15 19:42:04 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:45:34 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,31 @@ int	mouse_hook(int mousecode, int x, int y, t_vars *vars)
 {
 	(void)vars;
 	printf("mouseCode:%d\n", mousecode);
-	printf("x:%d\n", x);
-	printf("y:%d\n", y);
+	if (mousecode == 1)
+	{
+		printf("x:%d\n", x);
+		printf("y:%d\n", y);
+	}
 	return (0);
 }
 
 int	key_hook(int keycode, t_vars *vars)
 {
-	printf("p:%p\n", vars->mlx);
-	printf("keycode:%d\n", keycode);
-	if (keycode == 53)
+//	printf("p:%p\n", vars->mlx);
+//	printf("keycode:%d\n", keycode);
+	if (keycode == ESC)
 		close_win(vars);
-	if (keycode == 49)
+	if (keycode == SPACE)
 		printf("space\n");
+	if (keycode == W)
+		printf("w\n");
+	if (keycode == S)
+		printf("s\n");
+	if (keycode == A)
+		printf("a\n");
+	if (keycode == D)
+		printf("d\n");
 	return (0);
-}
-
-int	close_win(t_vars *vars)
-{
-	mlx_destroy_window(vars->mlx, vars->win);
-	exit(0);
 }
 
 void	set_hooks(t_vars *vars)

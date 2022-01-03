@@ -6,135 +6,85 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/28 21:12:55 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/12/31 00:27:11 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	read_map(char *file, t_data *d)
+//TODO CHECK MAP
+//TODO ERROR DISPLAY
+//		if (count_line(tmp))
+//		{
+//			if (line > 0 && d->xlen != count_line(tmp))
+//				printf("invalide map / readmap()\n");
+//			d->xlen = count_line(tmp);
+//		}
+
+void	read_map(char *file, t_data *d)
 {
 	int		fd;
 	char	*tmp;
-	char	*help;
-	int		line;
+	char	*son;
 
 	fd = open(file, O_RDONLY);
-	line = 0;
 	if (fd < 0)
-		return (0);
+		return ;
 	while (fd >= 0)
 	{
 		tmp = get_next_line(fd);
-		if (count_line(tmp))
-		{
-			if (line > 0 && d->xlen != count_line(tmp))
-				printf("invalide map / readmap()\n");
-			d->xlen = count_line(tmp);
-		}
 		if (!tmp)
-			return (line);
-		help = d->map;
+			return ;
+		son = d->map;
 		d->map = ft_strjoin(d->map, tmp);
 		free(tmp);
-		free(help);
-		line++;
+		free(son);
 	}
-	return (0);
+	close(fd);
 }
 
-int	ft_nbtlen(int nbr)
+void	get_ylen(t_data *d)
 {
+	int	ylen;
 	int	i;
 
+	ylen = 0;
 	i = 0;
-	while (nbr)
+	while (d->map[i])
 	{
-		nbr /= 10;
+		if (d->map[i] == '\n' && d->map[i + 1])
+			ylen++;
 		i++;
 	}
-	return (i);
+	d->ylen = ylen + 1;
 }
 
-int	count_line(const char *tmp)
+void	get_xlen(char *file, t_data *d)
 {
-	int	i;
-	int	count;
+	int		xlen;
+	int		fd;
+	int		i;
+	char	*tmp;
 
-	if (!tmp)
-		return (0);
-	i = 0;
-	count = 0;
-	while (tmp[i])
+	fd = open(file, O_RDONLY);
+	while (fd >= 0)
 	{
-		while (tmp[i] == ' ')
-			i++;
-		if (ft_atoi((tmp + i)))
-		{
-			count++;
-			i += ft_nbtlen(tmp[i]);
-		}
-		else if (ft_atoi((tmp + i)) == 0)
-		{
-			count++;
-			i++;
-		}
-	}
-	return (count);
-}
-
-int	test_line(const char *tmp, int *i)
-{
-	int	ret;
-
-	if (!tmp)
-		return (0);
-	ret = 0;
-	while (tmp[*i] == ' ')
-	{
-		*i = *i + 1;
-	}
-	if (ft_atoi((tmp + *i)))
-	{
-		ret = ft_atoi((tmp + *i));
-		*i += ft_nbtlen(tmp[*i]);
-	}
-	else if (ft_atoi((tmp + *i)) == 0)
-	{
-		*i = *i + 1;
-	}
-//	printf("%d ", ret);
-	return (ret);
-}
-
-void	process_map(t_data *d)
-{
-	int	**new_map;
-	int	i;
-	int	j;
-	int	k;
-
-	new_map = malloc(d->ylen * sizeof(int *));
-	if (!*new_map)
-		return ;
-	j = 0;
-	k = 0;
-	while (j < d->ylen)
-	{
-		i = 0;
-		new_map[j] = malloc(d->xlen * sizeof(int));
-		if (!new_map[j])
+		tmp = get_next_line(fd);
+		if (!tmp)
 			return ;
-		while (i < d->xlen)
+		i = 0;
+		xlen = 0;
+		while (tmp[i++])
 		{
-			new_map[j][i] = test_line(d->map, &k);
-//			printf("[%d]", new_map[j][i]);
-//			if (new_map[j][i] == 0)
-//				printf(" ");
-			i++;
+			while (tmp[i] == ' ')
+				i++;
+			if (tmp[i] == '\n')
+				break ;
+			if (atoi(tmp + i) || atoi(tmp + i) == 0)
+				xlen++;
+			d->xlen = xlen;
 		}
-//		printf("\n");
-		j++;
+		free(tmp);
 	}
-	d->wire = new_map;
+	close(fd);
 }

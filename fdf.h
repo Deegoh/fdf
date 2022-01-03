@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/28 23:41:03 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2021/12/30 23:47:37 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -15,8 +15,17 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include <errno.h>
+# include <string.h>
 # include "./minilibx_macos/mlx.h"
 # include "./libft/libft.h"
+
+# define W 13
+# define S 1
+# define A 0
+# define D 2
+# define ESC 53
+# define SPACE 49
 
 typedef struct s_data {
 	void	*img;
@@ -39,24 +48,43 @@ typedef struct s_vars {
 }				t_vars;
 
 typedef struct s_point {
-	int		x;
-	int		y;
-	int		z;
-	int		color;
+	int	x;
+	int	y;
+	int	z;
+	int	color;
 }				t_point;
 
-int		read_map(char *file, t_data *d);
-int		count_line(const char *tmp);
+typedef struct s_line {
+	int	bx;
+	int	by;
+	int	ex;
+	int	ey;
+	int	s;
+	int	color;
+}				t_line;
+
+void	read_map(char *file, t_data *d);
+void	get_ylen(t_data *d);
+void	get_xlen(char *file, t_data *d);
+
+int		ft_nbrlen(int nbr);
+int		get_value_map(const char *tmp, int *i);
 void	process_map(t_data *d);
-void	draw_map_cart(t_data *data);
-int		close_win(t_vars *vars);
 
 void	set_hooks(t_vars *vars);
 
-void	draw_line(t_data d, int bx, int by, int endX, int endY, int color);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	draw_line2(t_data d, t_point b, t_point e, int color);
+void	draw_wire2(t_data *data);
+void	draw_line(t_data d, int bx, int by, int ex, int ey, int color);
+void	draw_wire(t_data *data);
+
+int		close_win(t_vars *vars);
+
 void	square(t_data img, int posX, int posY, int x, int y, int color);
 void	circle1(t_data img, int xc, int yc, int r, int color);
 void	circle2(t_data img, int xc, int yc, int radius, int color);
+
 void	eight_way_plot(t_data img, int xc, int yc, int x, int y, int color);
 
 #endif

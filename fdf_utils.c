@@ -34,13 +34,13 @@ int key_hook(int keycode, t_vars *vars)
 	return (0);
 }
 
-int closeWin(t_vars *vars)
+int	closewin(t_vars *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);
 }
 
-int mouse_hook(int mousecode, int x, int y, t_vars *vars)
+int	mouse_hook(int mousecode, int x, int y, t_vars *vars)
 {
 	(void)vars;
 //	printf("p:%p\n", vars->mlx);
@@ -50,9 +50,9 @@ int mouse_hook(int mousecode, int x, int y, t_vars *vars)
 	return (0);
 }
 
-void square(t_data img, int posX, int posY, int x, int y, int color)
+void	square(t_data img, int posX, int posY, int x, int y, int color)
 {
-	int large;
+	int	large;
 
 	large = x;
 	while (large--)
@@ -68,10 +68,10 @@ void square(t_data img, int posX, int posY, int x, int y, int color)
 	}
 }
 
-void circle2(t_data img, int xc, int yc, int radius, int color)
+void	circle2(t_data img, int xc, int yc, int radius, int color)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < 500)
@@ -87,7 +87,7 @@ void circle2(t_data img, int xc, int yc, int radius, int color)
 	}
 }
 
-void    EightWaySymmetricPlot(t_data img, int xc, int yc, int x, int y, int color)
+void	EightWaySymmetricPlot(t_data img, int xc, int yc, int x, int y, int color)
 {
 	my_mlx_pixel_put(&img, x + xc, -y + yc, color);
 	my_mlx_pixel_put(&img, y + xc, -x + yc, color);
@@ -99,11 +99,11 @@ void    EightWaySymmetricPlot(t_data img, int xc, int yc, int x, int y, int colo
 	my_mlx_pixel_put(&img, -x + xc, -y + yc, color);
 }
 
-void circle1(t_data img, int xc, int yc, int r, int color)
+void	circle1(t_data img, int xc, int yc, int r, int color)
 {
-	int x;
-	int y;
-	int d;
+	int	x;
+	int	y;
+	int	d;
 
 	x = 0;
 	y = r;
@@ -120,17 +120,16 @@ void circle1(t_data img, int xc, int yc, int r, int color)
 	}
 }
 
-void drawLine(t_data img, int beginX, int beginY, int endX, int endY, int color)
+void	drawline(t_data img, int beginX, int beginY, int endX, int endY, int color)
 {
-	double deltaX = endX - beginX;
-	double deltaY = endY - beginY;
-	double pixelX = beginX;
-	double pixelY = beginY;
-	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+	double	deltaX = endX - beginX;
+	double	deltaY = endY - beginY;
+	double	pixelX = beginX;
+	double	pixelY = beginY;
+	int	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 
 	deltaX /= pixels; // 1
 	deltaY /= pixels; // 0
-
 	while (pixels)
 	{
 		my_mlx_pixel_put(&img, pixelX, pixelY, color);
