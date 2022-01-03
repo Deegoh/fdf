@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/31 00:27:11 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/03 07:41:21 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,16 @@ void	get_xlen(char *file, t_data *d)
 		tmp = get_next_line(fd);
 		if (!tmp)
 			return ;
-		i = 0;
+		i = -1;
 		xlen = 0;
-		while (tmp[i++])
+		while (tmp[++i])
 		{
 			while (tmp[i] == ' ')
 				i++;
-			if (tmp[i] == '\n')
-				break ;
 			if (atoi(tmp + i) || atoi(tmp + i) == 0)
 				xlen++;
+			if (atoi(tmp + i) || atoi(tmp + i) == 0)
+				i = i + ft_nbrlen(atoi(tmp + i));
 			d->xlen = xlen;
 		}
 		free(tmp);
