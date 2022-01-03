@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/03 06:42:33 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:25:10 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_line2(t_data d, t_point b, t_point e, int color)
 	pixels = (int)sqrt((deltax * deltax) + (deltay * deltay));
 	deltax /= pixels;
 	deltay /= pixels;
-	while (pixels + 1)
+	while (pixels)
 	{
 		my_mlx_pixel_put(&d, (int)pixelx, (int)pixely, color);
 		pixelx += deltax;
@@ -44,32 +44,105 @@ void	draw_line2(t_data d, t_point b, t_point e, int color)
 	}
 }
 
+void	cart_to_iso(t_point *p)
+{
+	t_point	np;
+
+	np.x = p->x - p->y;
+	np.y = (p->x + p->y) / 2;
+	p->x = np.x;
+	p->y = np.y;
+	//	ibx = bx - by + m;
+	//	iex = ex - ey + m;
+	//	iby = (bx + by) / 2;
+	//	iey = (ex + ey) / 2;
+}
+
+t_point	iso(t_point p, int i)
+{
+	t_point	np;
+	int		previous_x;
+	int		previous_y;
+
+	previous_x = p.x;
+	previous_y = p.y;
+	if (i == 1)
+		previous_y = p.y + p.s;
+	else if (i == 2)
+		previous_x = p.x + p.s;
+	else if (i == 3)
+	{
+		previous_y = p.y + p.s;
+		previous_x = p.x + p.s;
+	}
+	else if (i == -1)
+		previous_y = p.y - p.s;
+	else if (i == -2)
+		previous_x = p.x - p.s;
+	np.x = (previous_x - previous_y) * cos(0.523599);
+	np.y = (previous_x + previous_y) * sin(0.523599);
+	return (np);
+}
+
+//TODO IMPROVE GRADIENT
+//improve draw
+void	draw_point(t_data *data, t_point p, int color)
+{
+	int	s;
+	int	c;
+
+	s = data->scale;
+	p.s = s;
+	c = 0x00FFFFFF;
+//	draw_line(*data, p.x, p.y, p.x, p.y + p.s, c);
+//	draw_line(*data, p.x, p.y, p.x + p.s, p.y, c);
+	draw_line2(*data, iso(p, 0), iso(p, 2), c);
+	draw_line2(*data, iso(p, 0), iso(p, 1), c);
+	p.s = s / 2 + 1;
+	draw_line2(*data, iso(p, 0), iso(p, 2), color);
+	draw_line2(*data, iso(p, 0), iso(p, 1), color);
+	draw_line2(*data, iso(p, 0), iso(p, -1), color);
+	draw_line2(*data, iso(p, 0), iso(p, -2), color);
+//	draw_line(*data, p.x, p.y, p.x, p.y + p.s, color);
+//	draw_line(*data, p.x, p.y, p.x + p.s, p.y, color);
+//	draw_line(*data, p.x, p.y, p.x - p.s, p.y, color);
+//	draw_line(*data, p.x, p.y, p.x, p.y - p.s, color);
+}
+
+void	draw_point2(t_data *data, t_point p, int color)
+{
+	draw_line2(*data, iso(p, 0), iso(p, 2), color);
+	draw_line2(*data, iso(p, 0), iso(p, 1), color);
+	draw_line2(*data, iso(p, 2), iso(p, 3), color);
+	draw_line2(*data, iso(p, 1), iso(p, 3), color);
+//	draw_line(*data, p.x, p.y, p.x + p.s, p.y, color);
+//	draw_line(*data, p.x, p.y, p.x, p.y + p.s, color);
+//	draw_line(*data, p.x + p.s, p.y, p.x + p.s, p.y + p.s, color);
+//	draw_line(*data, p.x, p.y + p.s, p.x + p.s, p.y + p.s, color);
+}
+
 void	draw_wire2(t_data *data)
 {
 	int		i;
 	int		j;
-	int		s;
-	int		x;
-	int		y;
+	t_point	p;
 
 	j = -1;
-	s = data->scale;
-	while (++j < data->ylen)
+	while (++j < data->ylen - 1)
 	{
-		i = 0;
-		while (i < data->xlen - 1)
+		i = -1;
+		while (++i < data->xlen - 1)
 		{
-			x = i;
-			y = j;
-			if (!data->wire[j][i++])
-			{
-				// i, i+1
-				// j, j+1
-				draw_line(*data, x, y, x + 1, y, 0x00FFFFFF);
-				draw_line(*data, x, y, x, y + 1, 0x00FFFFFF);
-//				draw_line(*data, x, y, x + s, y, 0x00FFFFFF);
-//				draw_line(*data, x, y, x, y + s, 0x00FFFFFF);
-			}
+			p.s = data->scale;
+			p.x = i * p.s;
+			p.y = j * p.s;
+//			p.color = color_gradient(p.s);
+//			cart_to_iso(&p);
+//			iso(&p);
+			if (data->wire[j][i])
+				draw_point(data, p, 0x00065CCC); //0x00FF0000
+			else
+				draw_point2(data, p, 0x00FFFFFF); //0x00FFFFFF
 		}
 	}
 }

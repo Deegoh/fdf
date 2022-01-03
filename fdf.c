@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/03 08:42:11 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/03 21:23:53 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_win(t_data *img, int size_x, int size_y, int scale)
 {
-	img->x = (size_x + 2) * scale * 1;
-	img->y = (size_y + 2) * scale * 1;
+	img->x = (size_x + 1) * scale * 1;
+	img->y = (size_y + 1) * scale * 1.5;
 	img->scale = scale;
 }
 
@@ -24,6 +24,9 @@ int	close_win(t_vars *vars)
 	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);
 }
+
+void	cart_to_iso(t_point *p);
+t_point	iso(t_point p, int i);
 
 int	main(int ac, char *av[])
 {
@@ -40,11 +43,11 @@ int	main(int ac, char *av[])
 	get_ylen(&d);
 	get_xlen(av[1], &d);
 	process_map(&d);
-	printf("map:\n%s", d.map);
+//	printf("map:\n%s", d.map);
 //	printf("xlen:%d\n", d.xlen);
 //	printf("ylen:%d\n", d.ylen);
-	printf("zmin:%d\n", d.zmin);
-	printf("zmax:%d\n", d.zmax);
+//	printf("zmin:%d\n", d.zmin);
+//	printf("zmax:%d\n", d.zmax);
 //	printf("\nwire:\n");
 //	int j;
 //	for (int i = 0; i < d.ylen; ++i)
@@ -66,26 +69,12 @@ int	main(int ac, char *av[])
 	draw_wire2(&d);
 //	draw_wire(&d);
 //	circle2(d, 250, 250, 200, 0x00571666);
-//TODO CONVERT CART TO ISO
-//	int	bx, by, ex, ey, m;
-//	int	ibx, iby, iex, iey;
-//	m = 50;
-//	bx = 50;
-//	by = 50;
-//	ex = 100;
-//	ey = 50;
-//	draw_line(d, bx, by, ex, ey, 0x00FFFFFF);
-//	ibx = bx - by + m;
-//	iex = ex - ey + m;
-//	iby = (bx + by) / 2;
-//	iey = (ex + ey) / 2;
-//	draw_line(d, ibx, iby, iex, iey, 0x0000FFFF);
-
+//	draw_line2(d, b, e, 0x0000ffff);
 //	draw_line(d, 0, 0, 100, 500, 0x00ffffff);
 //	circle1(d, 250, 250, 200, 0x00065ccc);
 //	square(d, 50, 50, 100, 150, 0x00FFFFFF);
 	set_hooks(&mlx);
-	mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, d.scale, d.scale);
+	mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 0);
 	mlx_loop(mlx.mlx);
 	return (0);
 }
