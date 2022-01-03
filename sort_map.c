@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 15:53:06 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/31 01:25:37 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/03 11:28:45 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ int	get_value_map(const char *tmp, int *i)
 	return (ret);
 }
 
+int	check_z(int value, t_data *d)
+{
+	if (value < d->zmin)
+		d->zmin = value;
+	if (value > d->zmax)
+		d->zmax = value;
+	return (value);
+}
+
 void	process_map(t_data *d)
 {
 	int	**new_map;
@@ -67,7 +76,7 @@ void	process_map(t_data *d)
 		if (!new_map[j])
 			return ;
 		while (i < d->xlen)
-			new_map[j][i++] = get_value_map(d->map, &k);
+			new_map[j][i++] = check_z(get_value_map(d->map, &k), d);
 		j++;
 	}
 	d->wire = new_map;

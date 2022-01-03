@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/31 02:03:58 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/03 08:42:11 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ int	main(int ac, char *av[])
 	get_ylen(&d);
 	get_xlen(av[1], &d);
 	process_map(&d);
-//	printf("map:\n%s", d.map);
+	printf("map:\n%s", d.map);
 //	printf("xlen:%d\n", d.xlen);
 //	printf("ylen:%d\n", d.ylen);
+	printf("zmin:%d\n", d.zmin);
+	printf("zmax:%d\n", d.zmax);
 //	printf("\nwire:\n");
 //	int j;
 //	for (int i = 0; i < d.ylen; ++i)
@@ -61,7 +63,8 @@ int	main(int ac, char *av[])
 	mlx.win = mlx_new_window(mlx.mlx, d.x, d.y, "Hello fdf!");
 	d.img = mlx_new_image(mlx.mlx, d.x, d.y);
 	d.adr = mlx_get_data_addr(d.img, &d.bits, &d.line_len, &d.endian);
-	draw_wire(&d);
+	draw_wire2(&d);
+//	draw_wire(&d);
 //	circle2(d, 250, 250, 200, 0x00571666);
 //TODO CONVERT CART TO ISO
 //	int	bx, by, ex, ey, m;
