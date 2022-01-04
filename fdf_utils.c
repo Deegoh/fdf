@@ -20,7 +20,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int key_hook(int keycode, t_vars *vars)
+int	key_hook(int keycode, t_vars *vars)
 {
 	printf("p:%p\n", vars->mlx);
 	printf("keycode:%d\n", keycode);
@@ -138,25 +138,3 @@ void	drawline(t_data img, int beginX, int beginY, int endX, int endY, int color)
 		--pixels;
 	}
 }
-/*
-int main(void)
-{
-	t_vars mlx;
-	t_data	img;
-
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 500, 500, "Hello fdf!");
-	img.img = mlx_new_image(mlx.mlx, 500, 500);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-		&img.line_lenght, &img.endian);
-//	circle2(img, 250, 250, 200, 0x00571666);
-//	circle1(img, 250, 250, 200, 0x00065ccc);
-	square(img, 50, 50, 100, 100, 0x00FFFFFF);
-	drawLine(img, 0, 0, 500, 500, 0x00FFFFFF);
-	mlx_put_image_to_window(mlx.mlx, mlx.win, img.img, 0, 0);
-	mlx_hook(mlx.win, 2, 1L<<0, key_hook, &mlx);
-	mlx_hook(mlx.win, 17, 0, closeWin, &mlx);
-	mlx_hook(mlx.win, 5, 0, mouse_hook, &mlx);
-	mlx_loop(mlx.mlx);
-}
-*/

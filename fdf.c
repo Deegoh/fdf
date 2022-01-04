@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/03 21:23:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:02:00 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_win(t_data *img, int size_x, int size_y, int scale)
 {
-	img->x = (size_x + 1) * scale * 1;
-	img->y = (size_y + 1) * scale * 1.5;
+	img->x = (size_x + 1) * scale * 2;
+	img->y = (size_y + 1) * scale * 2;
 	img->scale = scale;
 }
 
@@ -24,9 +24,6 @@ int	close_win(t_vars *vars)
 	mlx_destroy_window(vars->mlx, vars->win);
 	exit(0);
 }
-
-void	cart_to_iso(t_point *p);
-t_point	iso(t_point p, int i);
 
 int	main(int ac, char *av[])
 {
