@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/31 10:38:19 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/31 11:26:39 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ void	comment(t_data d)
 	}
 }
 
+int	ft_abs(int value)
+{
+	if (value < 0)
+		return (value * -1);
+	return (value);
+}
+
 int	main(int ac, char *av[])
 {
 	t_vars	mlx;
@@ -70,7 +77,7 @@ int	main(int ac, char *av[])
 		d.adr = mlx_get_data_addr(d.img, &d.bits, &d.line_len, &d.endian);
 		draw_wire2(&d);
 		set_hooks(&mlx);
-		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 300);
+		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, ((d.y - d.ylen * d.scale) / 2));
 		mlx_loop(mlx.mlx);
 	}
 	perror("Missing file");

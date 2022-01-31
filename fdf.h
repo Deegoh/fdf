@@ -69,6 +69,7 @@ void	process_map(t_data *d);
 void	set_hooks(t_vars *vars);
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		ft_abs(int value);
 void	draw_line2(t_data d, t_point b, t_point e, int color);
 void	draw_wire2(t_data *data);
 void	draw_line(t_data d, int bx, int by, int ex, int ey, int color);

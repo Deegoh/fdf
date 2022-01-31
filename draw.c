@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/04 19:34:27 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/31 10:38:47 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,4 +214,9 @@ void	draw_wire(t_data *data)
 			}
 		}
 	}
+}
+
+void	draw_line3(void)
+{
+	return ;
 }
