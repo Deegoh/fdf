@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/31 11:26:39 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:47:19 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_win(t_data *img, int size_x, int size_y, int scale)
 {
-	img->x = (size_x + 1) * scale * 2;
-	img->y = (size_y + 1) * scale * 2;
+	img->x = (size_x + 1) * scale * 1;
+	img->y = (size_y + 1) * scale * 1.5;
 	img->scale = scale;
 }
 
@@ -35,7 +35,7 @@ void	comment(t_data d)
 	printf("ylen:%d\n", d.ylen);
 	printf("zmin:%d\n", d.zmin);
 	printf("zmax:%d\n", d.zmax);
-	printf("\nwire:\n");
+	printf("wire:\n");
 	i = -1;
 	while (++i < d.ylen)
 	{
@@ -75,18 +75,13 @@ int	main(int ac, char *av[])
 		mlx.win = mlx_new_window(mlx.mlx, d.x, d.y, "Hello fdf!");
 		d.img = mlx_new_image(mlx.mlx, d.x, d.y);
 		d.adr = mlx_get_data_addr(d.img, &d.bits, &d.line_len, &d.endian);
-		draw_wire2(&d);
+//		draw_wire2(&d);
+		draw_wire(&d);
 		set_hooks(&mlx);
-		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, ((d.y - d.ylen * d.scale) / 2));
+//		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, ((d.y - (d.ylen + 1) * d.scale) / 2));
+		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 25, 25);
 		mlx_loop(mlx.mlx);
 	}
 	perror("Missing file");
 	return (EXIT_FAILURE);
 }
-
-//	draw_wire(&d);
-//	circle2(d, 250, 250, 200, 0x00571666);
-//	draw_line2(d, b, e, 0x0000ffff);
-//	draw_line(d, 0, 0, 100, 500, 0x00ffffff);
-//	circle1(d, 250, 250, 200, 0x00065ccc);
-//	square(d, 50, 50, 100, 150, 0x00FFFFFF);
