@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2021/12/29 16:45:34 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/31 10:37:26 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	mouse_hook(int mousecode, int x, int y, t_vars *vars)
 {
 	(void)vars;
-	printf("mouseCode:%d\n", mousecode);
+//	printf("mouseCode:%d\n", mousecode);
 	if (mousecode == 1)
 	{
 		printf("x:%d\n", x);

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/04 17:07:09 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/04 19:34:27 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,25 @@ t_point	iso(t_point p, int i)
 		previous_x = p.x - p.s;
 	np.x = (previous_x - previous_y) * cos(0.523599);
 	np.y = (previous_x + previous_y) * sin(0.523599);
+//	if (np.x < 0)
+//		np.x *= -1;
+//	if (np.y < 0)
+//		np.y *= -1;
+//	printf("x:%d ", np.x);
+//	printf("y:%d\n", np.y);
 	return (np);
 }
+
+//void	cart_to_iso(t_point *p)
+//{
+//	int		previous_x;
+//	int		previous_y;
+//
+//	previous_x = p->x;
+//	previous_y = p->y;
+//	p->x = (previous_x - previous_y) * cos(0.523599);
+//	p->y = (previous_x + previous_y) * sin(0.523599);
+//}
 
 void	cart_to_iso(t_point *p)
 {
@@ -77,8 +94,8 @@ void	cart_to_iso(t_point *p)
 
 	previous_x = p->x;
 	previous_y = p->y;
-	p->x = (previous_x - previous_y) * cos(0.523599);
-	p->y = (previous_x + previous_y) * sin(0.523599);
+	p->x = (previous_x + previous_y);
+	p->y = (previous_y + previous_x) / 2;
 }
 
 //TODO IMPROVE GRADIENT
