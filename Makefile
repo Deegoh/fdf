@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 NAME = fdf
 SRC = fdf.c\
 	  read_map.c\
@@ -25,16 +25,9 @@ LIB = -lmlx -lm -lft -L $(MINILIBX_DIR) -L $(LIBFT_DIR)
 all: $(NAME)
 
 $(NAME): libx libft $(OBJ)
-	$(CC) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME) -g
+	$(CC) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
 exec: all
-	./$(NAME) test_maps/42.fdf
-leak: all
-	valgrind --leak-check=full\
-			 --show-leak-kinds=all\
-			 --track-origins=yes\
-			 --verbose\
-			 --log-file=valgrind-out.txt\
-			 ./$(NAME) test_maps/42.fdf
+	./$(NAME) test_maps/10-2.fdf
 libx:
 	@$(MAKE) -sC $(MINILIBX_DIR)
 libft:
