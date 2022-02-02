@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/11 10:05:54 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:18:35 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	read_map(char *file, t_data *d)
 {
 	int		fd;
 	char	*tmp;
-	char	*son;
+	char	*sson;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -35,10 +35,10 @@ void	read_map(char *file, t_data *d)
 		tmp = get_next_line(fd);
 		if (!tmp)
 			return ;
-		son = d->map;
+		sson = d->map;
 		d->map = ft_strjoin(d->map, tmp);
 		free(tmp);
-		free(son);
+		free(sson);
 	}
 	close(fd);
 }
@@ -67,7 +67,7 @@ void	get_xlen(char *file, t_data *d)
 	char	*tmp;
 
 	fd = open(file, O_RDONLY);
-	while (fd >= 0)
+	if (fd >= 0)
 	{
 		tmp = get_next_line(fd);
 		if (!tmp)
@@ -78,10 +78,11 @@ void	get_xlen(char *file, t_data *d)
 		{
 			while (tmp[i] == ' ')
 				i++;
-			if (atoi(tmp + i) || atoi(tmp + i) == 0)
-				xlen++;
-			if (atoi(tmp + i) || atoi(tmp + i) == 0)
-				i = i + ft_nbrlen(atoi(tmp + i));
+			if (ft_atoi(tmp + i) || ft_atoi(tmp + i) == 0)
+			{
+				i = i + ft_nbrlen(ft_atoi(tmp + i));
+				d->xlen++;
+			}
 			d->xlen = xlen;
 		}
 		free(tmp);

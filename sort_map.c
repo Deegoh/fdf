@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 15:53:06 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/03 11:28:45 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:53:33 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,20 @@ int	ft_nbrlen(int nbr)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
+	if (nbr < 0)
+	{
+		nbr = -nbr;
+		i++;
+	}
 	if (nbr == 0)
-		return (1);
+		return (i);
 	while (nbr)
 	{
 		nbr /= 10;
 		i++;
 	}
-	return (i);
+	return (i - 1);
 }
 
 int	get_value_map(const char *tmp, int *i)
@@ -41,7 +46,7 @@ int	get_value_map(const char *tmp, int *i)
 	if (ft_atoi((tmp + *i)))
 	{
 		ret = ft_atoi((tmp + *i));
-		*i += ft_nbrlen(tmp[*i]);
+		*i = *i + ft_nbrlen(ret);
 	}
 	else if (ft_atoi((tmp + *i)) == 0)
 		*i = *i + 1;
@@ -65,7 +70,7 @@ void	process_map(t_data *d)
 	int	k;
 
 	new_map = malloc(d->ylen * sizeof(int *));
-	if (!*new_map)
+	if (!new_map)
 		return ;
 	j = 0;
 	k = 0;
