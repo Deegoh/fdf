@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/31 17:49:14 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:36:47 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line2(t_data d, t_point b, t_point e, int color)
+void	draw_line(t_data d, t_point b, t_point e, int color)
 {
 	double	deltax;
 	double	deltay;
@@ -44,71 +44,15 @@ void	draw_line2(t_data d, t_point b, t_point e, int color)
 	}
 }
 
-t_point	iso(t_point p, int i)
+void	iso(int *x, int *y, int z)
 {
-	t_point	np;
-	int		previous_x;
-	int		previous_y;
+	double	previous_x;
+	double	previous_y;
 
-	previous_x = p.x;
-	previous_y = p.y;
-	if (i == 1)
-		previous_y = p.y + p.s;
-	else if (i == 2)
-		previous_x = p.x + p.s;
-	else if (i == 3)
-	{
-		previous_y = p.y + p.s;
-		previous_x = p.x + p.s;
-	}
-	else if (i == -1)
-		previous_y = p.y - p.s;
-	else if (i == -2)
-		previous_x = p.x - p.s;
-	np.x = (previous_x - previous_y) * cos(0.523599);
-	np.y = (previous_x + previous_y) * sin(0.523599);
-	return (np);
-}
-
-void	draw_point(t_data *data, t_point p, int color)
-{
-	p.s = p.s / 2;
-	draw_line2(*data, iso(p, 0), iso(p, 1), color);
-	draw_line2(*data, iso(p, 0), iso(p, 2), color);
-	draw_line2(*data, iso(p, 0), iso(p, -1), color);
-	draw_line2(*data, iso(p, 0), iso(p, -2), color);
-}
-
-void	draw_point2(t_data *data, t_point p, int color)
-{
-	p.s = p.s / 2;
-	draw_line2(*data, iso(p, 0), iso(p, 2), color);
-	draw_line2(*data, iso(p, 0), iso(p, 1), color);
-	draw_line2(*data, iso(p, 0), iso(p, -1), color);
-	draw_line2(*data, iso(p, 0), iso(p, -2), color);
-}
-
-void	draw_wire2(t_data *data)
-{
-	int		i;
-	int		j;
-	t_point	p;
-
-	j = -1;
-	while (++j < data->ylen)
-	{
-		i = -1;
-		while (++i < data->xlen)
-		{
-			p.s = data->scale;
-			p.x = i * p.s;
-			p.y = j * p.s;
-			if (data->wire[j][i])
-				draw_point(data, p, 0x00065CCC); //0x00FF0000
-			else
-				draw_point2(data, p, 0x00FFFFFF); //0x00FFFFFF
-		}
-	}
+	previous_x = *x;
+	previous_y = *y;
+	*x = (previous_x - previous_y) * cos(0.523599);
+	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
 void	draw_wire(t_data *data)
@@ -119,23 +63,30 @@ void	draw_wire(t_data *data)
 	t_point	e;
 
 	j = -1;
-	while (++j < data->ylen)
+	while (++j < data->ylen - 1)
 	{
 		i = -1;
-		while (++i < data->xlen)
+		while (++i < data->xlen - 1)
 		{
 			b.s = data->scale;
 			b.x = i * b.s;
 			b.y = j * b.s;
-			b.z = data->wire[j][i];
+			b.z = data->wire[j][i] * 4;
 			e.s = data->scale;
 			e.x = (i + 1) * e.s;
 			e.y = j * e.s;
-			e.z = data->wire[j][i];
-			draw_line2(*data, b, e, 0x00FFFFFF); //0x00FF0000
+			e.z = data->wire[j][i + 1] * 4;
+			iso(&b.x, &b.y, b.z);
+			iso(&e.x, &e.y, e.z);
+			b.x += (data->ylen * data->scale);
+			e.x += (data->ylen * data->scale);
+			draw_line(*data, b, e, 0x00FFFFFF);
 			e.x = i * e.s;
 			e.y = (j + 1) * e.s;
-			draw_line2(*data, b, e, 0x00FFFFFF); //0x00FF0000
+			e.z = data->wire[j + 1][i] * 4;
+			iso(&e.x, &e.y, e.z);
+			e.x += (data->ylen * data->scale);
+			draw_line(*data, b, e, 0x00FFFFFF);
 		}
 	}
 }
