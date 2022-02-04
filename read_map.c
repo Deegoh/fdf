@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/02 19:18:35 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/04 22:48:13 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,48 @@ void	get_ylen(t_data *d)
 	d->ylen = ylen + 1;
 }
 
-void	get_xlen(char *file, t_data *d)
+int	check_xlen(int *xlen)
 {
-	int		xlen;
-	int		fd;
-	int		i;
-	char	*tmp;
+	int	i;
 
-	fd = open(file, O_RDONLY);
-	if (fd >= 0)
+	i = -1;
+	while (xlen[++i])
 	{
-		tmp = get_next_line(fd);
-		if (!tmp)
-			return ;
-		i = -1;
-		xlen = 0;
-		while (tmp[++i])
-		{
-			while (tmp[i] == ' ')
-				i++;
-			if (ft_atoi(tmp + i) || ft_atoi(tmp + i) == 0)
-			{
-				i = i + ft_nbrlen(ft_atoi(tmp + i));
-				d->xlen++;
-			}
-			d->xlen = xlen;
-		}
-		free(tmp);
+//		if (xlen[0] != xlen[i])
+//		{
+			printf("bug xlen:%d\n", xlen[i]);
+//			exit(EXIT_FAILURE);
+//		}
 	}
-	close(fd);
+	return (xlen[0]);
+}
+
+void	get_xlen(t_data *d)
+{
+	int	xlen[d->ylen - 1];
+	int	i;
+	int	j;
+	int	len;
+
+	i = -1;
+	j = 0;
+	xlen[j] = 0;
+	len = ft_strlen(d->map);
+	while (++i < len)
+	{
+		while (d->map[i] == ' ')
+			i++;
+		while (ft_isdigit(d->map[i]) || d->map[i] == '-')
+			i++;
+//		while (d->map[i] == ' ')
+//			i++;
+		xlen[j]++;
+		if (d->map[i] == '\n')
+		{
+			xlen[++j] = 0;
+			i++;
+			continue ;
+		}
+	}
+	d->xlen = check_xlen(xlen);
 }

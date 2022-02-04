@@ -59,7 +59,7 @@ typedef struct s_point {
 
 void	read_map(char *file, t_data *d);
 void	get_ylen(t_data *d);
-void	get_xlen(char *file, t_data *d);
+void	get_xlen(t_data *d);
 
 int		ft_nbrlen(int nbr);
 int		get_value_map(const char *tmp, int *i);

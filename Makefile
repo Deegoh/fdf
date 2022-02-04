@@ -27,7 +27,7 @@ all: $(NAME)
 $(NAME): libx libft $(OBJ)
 	$(CC) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
 exec: all
-	./$(NAME) test_maps/10-2.fdf
+	./$(NAME) test_maps/42.fdf
 libx:
 	@$(MAKE) -sC $(MINILIBX_DIR)
 libft:
