@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/02 18:36:47 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:56:41 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ void	draw_wire(t_data *data)
 	int		j;
 	t_point	b;
 	t_point	e;
+	int		z = 4;
+	int		y = 100;
+	int		x = 19 * data->scale;
+//	int		x = data->xlen * data->scale;
 
 	j = -1;
 	while (++j < data->ylen - 1)
@@ -70,22 +74,22 @@ void	draw_wire(t_data *data)
 		{
 			b.s = data->scale;
 			b.x = i * b.s;
-			b.y = j * b.s;
-			b.z = data->wire[j][i] * 4;
+			b.y = j * b.s + y;
+			b.z = data->wire[j][i] * z;
 			e.s = data->scale;
 			e.x = (i + 1) * e.s;
-			e.y = j * e.s;
-			e.z = data->wire[j][i + 1] * 4;
+			e.y = j * e.s + y;
+			e.z = data->wire[j][i + 1] * z;
 			iso(&b.x, &b.y, b.z);
 			iso(&e.x, &e.y, e.z);
-			b.x += (data->ylen * data->scale);
-			e.x += (data->ylen * data->scale);
+			b.x += x;
+			e.x += x;
 			draw_line(*data, b, e, 0x00FFFFFF);
 			e.x = i * e.s;
-			e.y = (j + 1) * e.s;
-			e.z = data->wire[j + 1][i] * 4;
+			e.y = (j + 1) * e.s + y;
+			e.z = data->wire[j + 1][i] * z;
 			iso(&e.x, &e.y, e.z);
-			e.x += (data->ylen * data->scale);
+			e.x += x;
 			draw_line(*data, b, e, 0x00FFFFFF);
 		}
 	}

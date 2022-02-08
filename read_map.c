@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/04 22:48:13 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:23:22 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,40 +66,39 @@ int	check_xlen(int *xlen)
 	i = -1;
 	while (xlen[++i])
 	{
-//		if (xlen[0] != xlen[i])
-//		{
-			printf("bug xlen:%d\n", xlen[i]);
-//			exit(EXIT_FAILURE);
-//		}
+		if (xlen[0] != xlen[i])
+		{
+			printf("check_xlen i:%d xlen:%d\n", i, xlen[i]);
+			exit(EXIT_FAILURE);
+		}
 	}
 	return (xlen[0]);
 }
 
 void	get_xlen(t_data *d)
 {
-	int	xlen[d->ylen - 1];
+	int	*xlen;
 	int	i;
 	int	j;
 	int	len;
 
 	i = -1;
 	j = 0;
-	xlen[j] = 0;
+	xlen = ft_calloc(sizeof(xlen), d->ylen);
 	len = ft_strlen(d->map);
 	while (++i < len)
 	{
-		while (d->map[i] == ' ')
-			i++;
-		while (ft_isdigit(d->map[i]) || d->map[i] == '-')
-			i++;
-//		while (d->map[i] == ' ')
-//			i++;
-		xlen[j]++;
+		if (d->map[i] == ' ')
+			continue ;
 		if (d->map[i] == '\n')
 		{
-			xlen[++j] = 0;
-			i++;
+			j++;
 			continue ;
+		}
+		if (ft_atoi(&d->map[i]) || (ft_atoi(&d->map[i]) == 0 && ft_isdigit(d->map[i])))
+		{
+			i += ft_nbrlen(ft_atoi(&d->map[i])) - 1;
+			xlen[j]++;
 		}
 	}
 	d->xlen = check_xlen(xlen);

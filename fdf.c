@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/04 20:49:49 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:50:46 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_win(t_data *img, int size_x, int size_y, int scale)
 {
 	img->x = (size_x + 1) * scale * 1.5;
-	img->y = (size_y+ 1) * scale * 1.5;
+	img->y = (size_y + 1) * scale * 1.5;
 	img->scale = scale;
 }
 
@@ -32,8 +32,7 @@ void	comment(t_data d)
 
 	printf("map:\n%s", d.map);
 	printf("maplen:%d\n", ft_strlen(d.map));
-
-//	printf("nbrlen:%d\n", ft_nbrlen(ft_atoi("0")));
+//	printf("nbrlen:%d\n", ft_nbrlen(ft_atoi("10")));
 	printf("x:%d\n", d.x);
 	printf("y:%d\n", d.y);
 	printf("xlen:%d\n", d.xlen);
@@ -86,7 +85,7 @@ int	main(int ac, char *av[])
 		draw_wire(&d);
 		set_hooks(&mlx);
 //		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, ((d.y - (d.ylen + 1) * d.scale) / 2));
-		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 100);
+		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 0);
 		mlx_loop(mlx.mlx);
 		return (EXIT_SUCCESS);
 	}
