@@ -7,6 +7,7 @@ SRC = fdf.c\
 	  error.c\
 	  set_hook.c\
 	  draw.c\
+	  init_values.c\
 	  draw_bonus.c
 OBJ = $(SRC:.c=.o)
 
@@ -25,7 +26,7 @@ LIB = -lmlx -lm -lft -L $(MINILIBX_DIR) -L $(LIBFT_DIR)
 all: $(NAME)
 
 $(NAME): libx libft $(OBJ)
-	$(CC) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
 exec: all
 	#./$(NAME) test_maps/10-2.fdf
 	./$(NAME) test_maps/42.fdf

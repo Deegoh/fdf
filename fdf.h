@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/02 15:31:33 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:18:39 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -42,6 +42,7 @@ typedef struct s_data {
 	int		ylen;
 	int		zmin;
 	int		zmax;
+	int		minminus;
 }				t_data;
 
 typedef struct s_vars {
@@ -58,13 +59,16 @@ typedef struct s_point {
 }				t_point;
 
 void	read_map(char *file, t_data *d);
-void	get_ylen(t_data *d);
-void	get_xlen(t_data *d);
+void	set_ylen(t_data *d);
+void	set_xlen(t_data *d);
+void	init_win(t_data *img, int size_x, int size_y, int scale);
 
 int		ft_nbrlen(int nbr);
 int		get_value_map(const char *tmp, int *i);
 int		check_z(int value, t_data *d);
 void	process_map(t_data *d);
+void	set_min_minus(int x, t_data *d);
+void	search_min_minus(t_data *data);
 
 void	set_hooks(t_vars *vars);
 

@@ -6,18 +6,11 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/08 16:50:46 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/10 11:44:37 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	init_win(t_data *img, int size_x, int size_y, int scale)
-{
-	img->x = (size_x + 1) * scale * 1.5;
-	img->y = (size_y + 1) * scale * 1.5;
-	img->scale = scale;
-}
 
 int	close_win(t_vars *vars)
 {
@@ -55,6 +48,7 @@ void	comment(t_data d)
 		}
 		printf("\n");
 	}
+	printf("minminus:%d\n", d.minminus);
 }
 
 int	ft_abs(int value)
@@ -73,16 +67,17 @@ int	main(int ac, char *av[])
 	{
 		d.map = ft_strdup("");
 		read_map(av[1], &d);
-		get_ylen(&d);
-		get_xlen(&d);
+		set_ylen(&d);
+		set_xlen(&d);
 		process_map(&d);
 		mlx.mlx = mlx_init();
 		init_win(&d, d.xlen, d.ylen, 50);
-		comment(d);
+//		search_min_minus
 		mlx.win = mlx_new_window(mlx.mlx, d.x, d.y, "Hello fdf!");
 		d.img = mlx_new_image(mlx.mlx, d.x, d.y);
 		d.adr = mlx_get_data_addr(d.img, &d.bits, &d.line_len, &d.endian);
 		draw_wire(&d);
+		comment(d);
 		set_hooks(&mlx);
 //		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, ((d.y - (d.ylen + 1) * d.scale) / 2));
 		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 0);
