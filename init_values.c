@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/10 11:44:37 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/11 20:43:38 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 void	init_win(t_data *img, int size_x, int size_y, int scale)
 {
-	img->x = (size_x + 0) * scale * 1.5;
-	img->y = (size_y + 0) * scale * 1.5;
+	img->x = (size_x + 0) * scale * 1.4;
+//	img->x = 22 * scale;
+	img->y = (size_y + 0) * scale * 1.4;
 	img->scale = scale;
 }
 
-void	set_min_minus(int x, t_data *d)
+int	set_min_minus(int x, int px)
 {
-	if (d->minminus > x)
-		d->minminus = x;
+	if (px > x)
+		return (x);
+	return (px);
 }
 
 void	set_xlen(t_data *d)
@@ -75,6 +77,7 @@ void	search_min_minus(t_data *data)
 	int		i;
 	int		j;
 	t_point	b;
+	int		z = 4;
 
 	j = -1;
 	while (++j < data->ylen - 1)
@@ -84,13 +87,10 @@ void	search_min_minus(t_data *data)
 		{
 			b.s = data->scale;
 			b.x = i * b.s;
-			b.y = j * b.s + y;
+			b.y = j * b.s + data->scale * 2;
 			b.z = data->wire[j][i] * z;
-			e.s = data->scale;
-			e.x = (i + 1) * e.s;
-			e.y = j * e.s + y;
-			e.z = data->wire[j][i + 1] * z;
-			set_min_minus(b.x, data);
+			iso(&b.x, &b.y, b.z);
+			data->minminus = set_min_minus(b.x, data->minminus);
 		}
 	}
 }

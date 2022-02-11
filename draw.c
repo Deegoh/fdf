@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/10 11:34:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/11 18:37:46 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void	draw_wire(t_data *data)
 	t_point	b;
 	t_point	e;
 	int		z = 4;
-	int		y = data->scale * 2;
-	int		x = 476 + data->scale * 3;
+	int		y = 1;
+	int		x = ft_abs(data->minminus) + 0;
+//	x = 0;
 
 	j = -1;
 	while (++j < data->ylen - 1)
@@ -80,7 +81,6 @@ void	draw_wire(t_data *data)
 			e.y = j * e.s + y;
 			e.z = data->wire[j][i + 1] * z;
 			iso(&b.x, &b.y, b.z);
-			set_min_minus(b.x, data);
 			iso(&e.x, &e.y, e.z);
 			b.x += x;
 			e.x += x;

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/10 10:18:39 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:53:53 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	read_map(char *file, t_data *d)
 	close(fd);
 }
 
-
-
 int	check_xlen(int *xlen)
 {
 	int	i;
@@ -51,5 +49,3 @@ int	check_xlen(int *xlen)
 	}
 	return (xlen[0]);
 }
-
-

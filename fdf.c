@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/10 11:44:37 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/11 18:39:53 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,13 @@ int	main(int ac, char *av[])
 		process_map(&d);
 		mlx.mlx = mlx_init();
 		init_win(&d, d.xlen, d.ylen, 50);
-//		search_min_minus
 		mlx.win = mlx_new_window(mlx.mlx, d.x, d.y, "Hello fdf!");
 		d.img = mlx_new_image(mlx.mlx, d.x, d.y);
 		d.adr = mlx_get_data_addr(d.img, &d.bits, &d.line_len, &d.endian);
+		search_min_minus(&d);
 		draw_wire(&d);
 		comment(d);
 		set_hooks(&mlx);
-//		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, ((d.y - (d.ylen + 1) * d.scale) / 2));
 		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 0);
 		mlx_loop(mlx.mlx);
 		return (EXIT_SUCCESS);
