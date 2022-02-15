@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/15 14:18:33 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/15 15:12:56 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	set_xlen(t_data *d)
 			j++;
 			continue ;
 		}
-		if (ft_atoi(&d->map[i]) || (ft_atoi(&d->map[i]) == 0 && ft_isdigit(d->map[i])))
+		if (ft_isdigit(d->map[i]))
 		{
 			i += ft_nbrlen(ft_atoi(&d->map[i])) - 1;
 			xlen[j]++;
@@ -81,7 +81,7 @@ void	search_values(t_data *data)
 			b.x = i * SCALE;
 			b.y = (j + 2) * SCALE;
 			b.z = data->wire[j][i] * Z;
-			iso(&b);
+			iso(&b, 0);
 			data->minminus = set_min_value(b.x, data->minminus);
 			data->xmax = set_max_value(b.x, data->xmax);
 			data->ymax = set_max_value(b.y, data->ymax);

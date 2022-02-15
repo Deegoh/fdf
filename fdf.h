@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/15 14:01:10 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/15 15:12:30 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -84,7 +84,8 @@ int		close_win(t_vars *vars);
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	draw_line(t_data d, t_point b, t_point e, int color);
-void	iso(t_point	*p);
+void	iso(t_point	*p, int offset);
+t_point	create_point(int x, int y, int z);
 void	draw_wire(t_data *data);
 
 #endif
