@@ -6,17 +6,11 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/11 18:39:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/15 13:48:03 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	close_win(t_vars *vars)
-{
-	mlx_destroy_window(vars->mlx, vars->win);
-	exit(0);
-}
 
 void	comment(t_data d)
 {
@@ -25,7 +19,6 @@ void	comment(t_data d)
 
 	printf("map:\n%s", d.map);
 	printf("maplen:%d\n", ft_strlen(d.map));
-//	printf("nbrlen:%d\n", ft_nbrlen(ft_atoi("10")));
 	printf("x:%d\n", d.x);
 	printf("y:%d\n", d.y);
 	printf("xlen:%d\n", d.xlen);
@@ -49,13 +42,9 @@ void	comment(t_data d)
 		printf("\n");
 	}
 	printf("minminus:%d\n", d.minminus);
-}
-
-int	ft_abs(int value)
-{
-	if (value < 0)
-		return (-value);
-	return (value);
+	printf("maxx:%d\n", d.xmax);
+	printf("maxy:%d\n", d.ymax + 100);
+	printf("testx:%d\n", d.xmax + ft_abs(d.minminus) + 200);
 }
 
 int	main(int ac, char *av[])
@@ -70,19 +59,20 @@ int	main(int ac, char *av[])
 		set_ylen(&d);
 		set_xlen(&d);
 		process_map(&d);
+		init_win(&d, d.xlen, d.ylen, SCALE);
+		search_values(&d);
+		d.x = d.xmax + ft_abs(d.minminus) + SCALE * 4;
+		d.y = d.ymax + SCALE;
 		mlx.mlx = mlx_init();
-		init_win(&d, d.xlen, d.ylen, 50);
 		mlx.win = mlx_new_window(mlx.mlx, d.x, d.y, "Hello fdf!");
 		d.img = mlx_new_image(mlx.mlx, d.x, d.y);
 		d.adr = mlx_get_data_addr(d.img, &d.bits, &d.line_len, &d.endian);
-		search_min_minus(&d);
 		draw_wire(&d);
-		comment(d);
+//		comment(d);
 		set_hooks(&mlx);
 		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 0);
 		mlx_loop(mlx.mlx);
 		return (EXIT_SUCCESS);
 	}
-	perror("Missing file");
-	return (EXIT_FAILURE);
+	display_err("Missing file");
 }

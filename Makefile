@@ -4,11 +4,10 @@ NAME = fdf
 SRC = fdf.c\
 	  read_map.c\
 	  sort_map.c\
-	  error.c\
 	  set_hook.c\
 	  draw.c\
 	  init_values.c\
-	  draw_bonus.c
+	  fdf_utils.c
 OBJ = $(SRC:.c=.o)
 
 MAP_DIR = test_maps/
@@ -28,8 +27,9 @@ all: $(NAME)
 $(NAME): libx libft $(OBJ)
 	$(CC) $(CFLAGS) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
 exec: all
-	#./$(NAME) test_maps/10-2.fdf
 	./$(NAME) test_maps/42.fdf
+norm:
+	norminette $(SRC)
 libx:
 	@$(MAKE) -sC $(MINILIBX_DIR)
 libft:

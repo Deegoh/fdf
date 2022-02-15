@@ -42,10 +42,7 @@ int	check_xlen(int *xlen)
 	while (xlen[++i])
 	{
 		if (xlen[0] != xlen[i])
-		{
-			printf("check_xlen i:%d xlen:%d\n", i, xlen[i]);
-			exit(EXIT_FAILURE);
-		}
+			display_err("x lenght");
 	}
 	return (xlen[0]);
 }

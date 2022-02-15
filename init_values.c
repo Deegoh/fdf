@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/11 20:43:38 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/15 14:18:33 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,10 @@
 void	init_win(t_data *img, int size_x, int size_y, int scale)
 {
 	img->x = (size_x + 0) * scale * 1.4;
-//	img->x = 22 * scale;
 	img->y = (size_y + 0) * scale * 1.4;
-	img->scale = scale;
-}
-
-int	set_min_minus(int x, int px)
-{
-	if (px > x)
-		return (x);
-	return (px);
+	img->minminus = 0;
+	img->xmax = 0;
+	img->ymax = 0;
 }
 
 void	set_xlen(t_data *d)
@@ -72,12 +66,11 @@ void	set_ylen(t_data *d)
 	d->ylen = ylen + 1;
 }
 
-void	search_min_minus(t_data *data)
+void	search_values(t_data *data)
 {
 	int		i;
 	int		j;
 	t_point	b;
-	int		z = 4;
 
 	j = -1;
 	while (++j < data->ylen - 1)
@@ -85,12 +78,13 @@ void	search_min_minus(t_data *data)
 		i = -1;
 		while (++i < data->xlen - 1)
 		{
-			b.s = data->scale;
-			b.x = i * b.s;
-			b.y = j * b.s + data->scale * 2;
-			b.z = data->wire[j][i] * z;
-			iso(&b.x, &b.y, b.z);
-			data->minminus = set_min_minus(b.x, data->minminus);
+			b.x = i * SCALE;
+			b.y = (j + 2) * SCALE;
+			b.z = data->wire[j][i] * Z;
+			iso(&b);
+			data->minminus = set_min_value(b.x, data->minminus);
+			data->xmax = set_max_value(b.x, data->xmax);
+			data->ymax = set_max_value(b.y, data->ymax);
 		}
 	}
 }
