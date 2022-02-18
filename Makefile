@@ -7,7 +7,8 @@ SRC = fdf.c\
 	  set_hook.c\
 	  draw.c\
 	  init_values.c\
-	  fdf_utils.c
+	  fdf_utils.c\
+	  projection.c
 OBJ = $(SRC:.c=.o)
 
 MAP_DIR = test_maps/

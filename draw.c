@@ -6,21 +6,21 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/15 15:12:30 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/18 12:39:03 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_fdf *fdf, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->adr + (y * data->line_len + x * (data->bits / 8));
+	dst = fdf->data_addr + (y * fdf->size_line + x * (fdf->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line(t_data d, t_point b, t_point e, int color)
+void	draw_line(t_fdf *fdf, t_point b, t_point e, int color)
 {
 	double	deltax;
 	double	deltay;
@@ -37,7 +37,7 @@ void	draw_line(t_data d, t_point b, t_point e, int color)
 	deltay /= pixels;
 	while (pixels)
 	{
-		my_mlx_pixel_put(&d, (int)pixelx, (int)pixely, color);
+		my_mlx_pixel_put(&fdf, (int)pixelx, (int)pixely, color);
 		pixelx += deltax;
 		pixely += deltay;
 		--pixels;
@@ -67,7 +67,7 @@ t_point	create_point(int x, int y, int z)
 	return (point);
 }
 
-void	draw_wire(t_data *data)
+void	draw_wire(t_fdf *fdf)
 {
 	int		i;
 	int		j;
@@ -75,21 +75,21 @@ void	draw_wire(t_data *data)
 	t_point	e;
 	int		x;
 
-	x = ft_abs(data->minminus) + SCALE;
+	x = ft_abs(fdf->map->xmin) + SCALE;
 	j = -1;
-	while (++j < data->ylen - 1)
+	while (++j < fdf->map->ylen - 1)
 	{
 		i = -1;
-		while (++i < data->xlen - 1)
+		while (++i < fdf->map->xlen - 1)
 		{
-			b = create_point(i, j + 1, data->wire[j][i] * Z);
-			e = create_point(i + 1, j + 1, data->wire[j][i + 1] * Z);
+			b = create_point(i, j + 1, fdf->map->wire[j][i] * Z);
+			e = create_point(i + 1, j + 1, fdf->map->wire[j][i + 1] * Z);
 			iso(&b, x);
 			iso(&e, x);
-			draw_line(*data, b, e, 0x00FFFFFF);
-			e = create_point(i, j + 2, data->wire[j + 1][i] * Z);
+			draw_line(*fdf, b, e, 0x00FFFFFF);
+			e = create_point(i, j + 2, fdf->map->wire[j + 1][i] * Z);
 			iso(&e, x);
-			draw_line(*data, b, e, 0x00FFFFFF);
+			draw_line(*fdf, b, e, 0x00FFFFFF);
 		}
 	}
 }

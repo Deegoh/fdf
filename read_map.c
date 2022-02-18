@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	read_map(char *file, t_data *d)
+void	read_map(char *file, t_fdf *fdf)
 {
 	int		fd;
 	char	*tmp;
@@ -26,8 +26,8 @@ void	read_map(char *file, t_data *d)
 		tmp = get_next_line(fd);
 		if (!tmp)
 			return ;
-		sson = d->map;
-		d->map = ft_strjoin(d->map, tmp);
+		sson = fdf->map->map;
+		fdf->map->map = ft_strjoin(fdf->map->map, tmp);
 		free(tmp);
 		free(sson);
 	}

@@ -12,18 +12,18 @@
 
 #include "fdf.h"
 
-int	set_min_value(int x, int px)
+int	ft_min(int value1, int value2)
 {
-	if (px > x)
-		return (x);
-	return (px);
+	if (value2 > value1)
+		return (value1);
+	return (value2);
 }
 
-int	set_max_value(int x, int px)
+int	ft_max(int value1, int value2)
 {
-	if (px < x)
-		return (x);
-	return (px);
+	if (value2 < value1)
+		return (value1);
+	return (value2);
 }
 
 int	ft_abs(int value)

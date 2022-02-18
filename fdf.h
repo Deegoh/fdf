@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/15 15:12:30 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/18 16:49:50 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -20,7 +20,9 @@
 # include "./minilibx_macos/mlx.h"
 # include "./libft/libft.h"
 
+# define Q 12
 # define W 13
+# define E 14
 # define S 1
 # define A 0
 # define D 2
@@ -28,31 +30,34 @@
 # define SPACE 49
 
 # define SCALE 50
-# define Z 4
+# define Z 12
 
-typedef struct s_data {
-	void	*img;
-	char	*adr;
-	int		bits;
-	int		line_len;
-	int		endian;
+typedef struct s_map {
 	int		x;
 	int		y;
+	int		z;
 	char	*map;
 	int		**wire;
 	int		xlen;
 	int		ylen;
-	int		zmin;
-	int		zmax;
+	int		xmin;
 	int		xmax;
 	int		ymax;
-	int		minminus;
-}				t_data;
+	int		zmin;
+	int		zmax;
+}				t_map;
 
-typedef struct s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
+typedef struct			s_fdf
+{
+	void				*mlx;
+	void				*win;
+	void				*img;
+	char				*data_addr;
+	int					bits_per_pixel;
+	int					size_line;
+	int					endian;
+	t_map				*map;
+}						t_fdf;
 
 typedef struct s_point {
 	int	x;
@@ -63,29 +68,29 @@ typedef struct s_point {
 
 int		ft_nbrlen(int nbr);
 int		get_value_map(const char *tmp, int *i);
-int		check_z(int value, t_data *d);
-void	process_map(t_data *d);
+int		check_z(int value, t_fdf *fdf);
+void	process_map(t_fdf *fdf);
 
-void	set_hooks(t_vars *vars);
+void	set_hooks(t_fdf *fdf);
 
-void	read_map(char *file, t_data *d);
+void	read_map(char *file, t_fdf *fdf);
 int		check_xlen(int *xlen);
 
-void	init_win(t_data *img, int size_x, int size_y, int scale);
-void	set_ylen(t_data *d);
-void	set_xlen(t_data *d);
-void	search_values(t_data *data);
+void	init_win(t_fdf *fdf, int size_x, int size_y, int scale);
+void	set_ylen(t_fdf *fdf);
+void	set_xlen(t_fdf *fdf);
+void	search_values(t_fdf *fdf);
 
-int		set_min_value(int x, int px);
-int		set_max_value(int x, int px);
+int		ft_min(int value1, int value2);
+int		ft_max(int value1, int value2);
 int		ft_abs(int value);
 void	display_err(const char *str);
-int		close_win(t_vars *vars);
+int		close_win(t_fdf *fdf);
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	draw_line(t_data d, t_point b, t_point e, int color);
+void	my_mlx_pixel_put(t_fdf *fdf, int x, int y, int color);
+void	draw_line(t_fdf *fdf, t_point b, t_point e, int color);
 void	iso(t_point	*p, int offset);
 t_point	create_point(int x, int y, int z);
-void	draw_wire(t_data *data);
+void	draw_wire(t_fdf *fdf);
 
 #endif
