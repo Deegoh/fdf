@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/18 16:49:50 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/21 18:00:59 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -26,6 +26,8 @@
 # define S 1
 # define A 0
 # define D 2
+# define R 15
+# define F 3
 # define ESC 53
 # define SPACE 49
 
@@ -47,7 +49,16 @@ typedef struct s_map {
 	int		zmax;
 }				t_map;
 
-typedef struct			s_fdf
+typedef struct s_cam
+{
+	int	x;
+	int	y;
+	int	z;
+	int	xoffset;
+	int	yoffset;
+}	t_cam;
+
+typedef struct s_fdf
 {
 	void				*mlx;
 	void				*win;
@@ -56,7 +67,8 @@ typedef struct			s_fdf
 	int					bits_per_pixel;
 	int					size_line;
 	int					endian;
-	t_map				*map;
+	t_map				map;
+	t_cam				cam;
 }						t_fdf;
 
 typedef struct s_point {
@@ -76,7 +88,8 @@ void	set_hooks(t_fdf *fdf);
 void	read_map(char *file, t_fdf *fdf);
 int		check_xlen(int *xlen);
 
-void	init_win(t_fdf *fdf, int size_x, int size_y, int scale);
+void	init_struct(t_fdf *fdf, int size_x, int size_y, int scale);
+void	init_win(t_fdf *fdf, char *str);
 void	set_ylen(t_fdf *fdf);
 void	set_xlen(t_fdf *fdf);
 void	search_values(t_fdf *fdf);
@@ -91,6 +104,6 @@ void	my_mlx_pixel_put(t_fdf *fdf, int x, int y, int color);
 void	draw_line(t_fdf *fdf, t_point b, t_point e, int color);
 void	iso(t_point	*p, int offset);
 t_point	create_point(int x, int y, int z);
-void	draw_wire(t_fdf *fdf);
+void	draw_wire(t_fdf *fdf, int color);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 15:53:06 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/18 17:02:13 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:44:48 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	get_value_map(const char *tmp, int *i)
 
 int	check_z(int value, t_fdf *fdf)
 {
-	if (value < fdf->map->zmin)
-		fdf->map->zmin = value;
-	if (value > fdf->map->zmax)
-		fdf->map->zmax = value;
+	if (value < fdf->map.zmin)
+		fdf->map.zmin = value;
+	if (value > fdf->map.zmax)
+		fdf->map.zmax = value;
 	return (value);
 }
 
@@ -69,20 +69,20 @@ void	process_map(t_fdf *fdf)
 	int	j;
 	int	k;
 
-	new_map = malloc(fdf->map->ylen * sizeof(int *));
+	new_map = malloc(fdf->map.ylen * sizeof(int *));
 	if (!new_map)
 		return ;
 	j = 0;
 	k = 0;
-	while (j < fdf->map->ylen)
+	while (j < fdf->map.ylen)
 	{
 		i = 0;
-		new_map[j] = malloc(fdf->map->xlen * sizeof(int));
+		new_map[j] = malloc(fdf->map.xlen * sizeof(int));
 		if (!new_map[j])
 			return ;
-		while (i < fdf->map->xlen)
-			new_map[j][i++] = check_z(get_value_map(fdf->map->map, &k), fdf);
+		while (i < fdf->map.xlen)
+			new_map[j][i++] = check_z(get_value_map(fdf->map.map, &k), fdf);
 		j++;
 	}
-	fdf->map->wire = new_map;
+	fdf->map.wire = new_map;
 }

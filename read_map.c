@@ -26,8 +26,8 @@ void	read_map(char *file, t_fdf *fdf)
 		tmp = get_next_line(fd);
 		if (!tmp)
 			return ;
-		sson = fdf->map->map;
-		fdf->map->map = ft_strjoin(fdf->map->map, tmp);
+		sson = fdf->map.map;
+		fdf->map.map = ft_strjoin(fdf->map.map, tmp);
 		free(tmp);
 		free(sson);
 	}

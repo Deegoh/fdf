@@ -39,8 +39,8 @@ void	display_err(const char *str)
 	exit(EXIT_FAILURE);
 }
 
-int	close_win(t_vars *vars)
+int	close_win(t_fdf *fdf)
 {
-	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_window(fdf->mlx, fdf->win);
 	exit(EXIT_SUCCESS);
 }

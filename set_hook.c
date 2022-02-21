@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/18 17:02:07 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:02:34 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,23 @@ int	mouse_hook(int mousecode, int x, int y, t_fdf *fdf)
 
 int	key_hook(int keycode, t_fdf *fdf)
 {
+	draw_wire(fdf, 0x00000000);
 	if (keycode == ESC)
 		close_win(fdf);
-//	if (keycode == Q)
-//		Z = Z + 1;
-//	if (keycode == E)
-//		Z += -1;
+	if (keycode == Q)
+	{
+		printf("avant:%d", fdf->cam.z);
+		fdf->cam.z -= 1;
+		printf(" apres:%d\n", fdf->cam.z);
+	}
+	if (keycode == E)
+	{
+		printf("avant:%d", fdf->cam.z);
+		fdf->cam.z += 1;
+		printf(" apres:%d\n", fdf->cam.z);
+	}
+	printf("%d\n", keycode);
+	draw_wire(fdf, 0x00FFFFFF);
 	return (0);
 }
 

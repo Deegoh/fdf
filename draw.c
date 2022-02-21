@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/18 12:39:03 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:47:08 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	draw_line(t_fdf *fdf, t_point b, t_point e, int color)
 	deltay /= pixels;
 	while (pixels)
 	{
-		my_mlx_pixel_put(&fdf, (int)pixelx, (int)pixely, color);
+		my_mlx_pixel_put(fdf, (int)pixelx, (int)pixely, color);
 		pixelx += deltax;
 		pixely += deltay;
 		--pixels;
@@ -67,7 +67,7 @@ t_point	create_point(int x, int y, int z)
 	return (point);
 }
 
-void	draw_wire(t_fdf *fdf)
+void	draw_wire(t_fdf *fdf, int color)
 {
 	int		i;
 	int		j;
@@ -75,21 +75,22 @@ void	draw_wire(t_fdf *fdf)
 	t_point	e;
 	int		x;
 
-	x = ft_abs(fdf->map->xmin) + SCALE;
+	x = ft_abs(fdf->map.xmin) + SCALE;
 	j = -1;
-	while (++j < fdf->map->ylen - 1)
+	while (++j < fdf->map.ylen - 1)
 	{
 		i = -1;
-		while (++i < fdf->map->xlen - 1)
+		while (++i < fdf->map.xlen - 1)
 		{
-			b = create_point(i, j + 1, fdf->map->wire[j][i] * Z);
-			e = create_point(i + 1, j + 1, fdf->map->wire[j][i + 1] * Z);
+			b = create_point(i, j + 1, fdf->map.wire[j][i] * fdf->cam.z);
+			e = create_point(i + 1, j + 1, fdf->map.wire[j][i + 1] * fdf->cam.z);
 			iso(&b, x);
 			iso(&e, x);
-			draw_line(*fdf, b, e, 0x00FFFFFF);
-			e = create_point(i, j + 2, fdf->map->wire[j + 1][i] * Z);
+			draw_line(fdf, b, e, color);
+			e = create_point(i, j + 2, fdf->map.wire[j + 1][i] * fdf->cam.z);
 			iso(&e, x);
-			draw_line(*fdf, b, e, 0x00FFFFFF);
+			draw_line(fdf, b, e, color);
 		}
 	}
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }

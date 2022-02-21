@@ -6,73 +6,65 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/15 14:26:23 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:15:43 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	comment(t_data d)
+void	comment(t_fdf fdf)
 {
 	int	j;
 	int	i;
 
-	printf("map:\n%s", d.map);
-	printf("maplen:%d\n", ft_strlen(d.map));
-	printf("x:%d\n", d.x);
-	printf("y:%d\n", d.y);
-	printf("xlen:%d\n", d.xlen);
-	printf("ylen:%d\n", d.ylen);
-	printf("zmin:%d\n", d.zmin);
-	printf("zmax:%d\n", d.zmax);
+	printf("map:\n%s", fdf.map.map);
+	printf("maplen:%d\n", ft_strlen(fdf.map.map));
+	printf("x:%d\n", fdf.map.x);
+	printf("y:%d\n", fdf.map.y);
+	printf("xlen:%d\n", fdf.map.xlen);
+	printf("ylen:%d\n", fdf.map.ylen);
+	printf("zmin:%d\n", fdf.map.zmin);
+	printf("zmax:%d\n", fdf.map.zmax);
 	printf("wire:\n");
 	i = -1;
-	while (++i < d.ylen)
+	while (++i < fdf.map.ylen)
 	{
 		j = -1;
-		while (++j < d.xlen)
+		while (++j < fdf.map.xlen)
 		{
-			if (d.zmin < 0 && j == 0 && d.wire[i][j] > -1)
+			if (fdf.map.zmin < 0 && j == 0 && fdf.map.wire[i][j] > -1)
 				printf(" ");
-			if (d.wire[i][j] < 10)
-				printf("%d  ", d.wire[i][j]);
+			if (fdf.map.wire[i][j] < 10)
+				printf("%d  ", fdf.map.wire[i][j]);
 			else
-				printf("%d ", d.wire[i][j]);
+				printf("%d ", fdf.map.wire[i][j]);
 		}
 		printf("\n");
 	}
-	printf("minminus:%d\n", d.minminus);
-	printf("maxx:%d\n", d.xmax);
-	printf("maxy:%d\n", d.ymax + 100);
-	printf("testx:%d\n", d.xmax + ft_abs(d.minminus) + 200);
+	printf("minminus:%d\n", fdf.map.xmin);
+	printf("maxx:%d\n", fdf.map.xmax);
+	printf("maxy:%d\n", fdf.map.ymax + 100);
+	printf("testx:%d\n", fdf.map.xmax + ft_abs(fdf.map.xmin) + 200);
 }
 
 int	main(int ac, char *av[])
 {
-	t_vars	mlx;
-	t_data	d;
+	t_fdf	fdf;
 
 	if (ac == 2)
 	{
-		d.map = ft_strdup("");
-		read_map(av[1], &d);
-		set_ylen(&d);
-		set_xlen(&d);
-		process_map(&d);
-		init_win(&d, d.xlen, d.ylen, SCALE);
-		search_values(&d);
-		d.x = d.xmax + ft_abs(d.minminus) + SCALE * 4;
-		d.y = d.ymax + SCALE;
-		comment(d);
-		mlx.mlx = mlx_init();
-		mlx.win = mlx_new_window(mlx.mlx, d.x, d.y, "Hello fdf!");
-		d.img = mlx_new_image(mlx.mlx, d.x, d.y);
-		d.adr = mlx_get_data_addr(d.img, &d.bits, &d.line_len, &d.endian);
-		draw_wire(&d);
-		set_hooks(&mlx);
-		mlx_put_image_to_window(mlx.mlx, mlx.win, d.img, 0, 0);
-		mlx_loop(mlx.mlx);
-		return (EXIT_SUCCESS);
+		fdf.map.map = ft_strdup("");
+		read_map(av[1], &fdf);
+		set_ylen(&fdf);
+		set_xlen(&fdf);
+		process_map(&fdf);
+		init_struct(&fdf, fdf.map.xlen, fdf.map.ylen, SCALE);
+		search_values(&fdf);
+		comment(fdf);
+		init_win(&fdf, "Hello fdf!");
+		draw_wire(&fdf, 0x00FFFFFF);
+		set_hooks(&fdf);
+		mlx_loop(fdf.mlx);
 	}
 	display_err("Missing file");
 }
