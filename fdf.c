@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/21 17:15:43 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:37:28 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	comment(t_fdf fdf)
 	printf("minminus:%d\n", fdf.map.xmin);
 	printf("maxx:%d\n", fdf.map.xmax);
 	printf("maxy:%d\n", fdf.map.ymax + 100);
-	printf("testx:%d\n", fdf.map.xmax + ft_abs(fdf.map.xmin) + 200);
+//	printf("testx:%d\n", fdf.map.xmax + ft_abs(fdf.map.xmin) + 200);
 }
 
 int	main(int ac, char *av[])

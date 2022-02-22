@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/21 18:00:59 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:35:31 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -31,7 +31,12 @@
 # define ESC 53
 # define SPACE 49
 
-# define SCALE 50
+# define UP 126
+# define DOWN 125
+# define LEFT 123
+# define RIGHT 124
+
+# define SCALE 20
 # define Z 12
 
 typedef struct s_map {
@@ -51,11 +56,15 @@ typedef struct s_map {
 
 typedef struct s_cam
 {
-	int	x;
-	int	y;
-	int	z;
-	int	xoffset;
-	int	yoffset;
+//	double	beta;
+//	double	gamma;
+//	double	alpha;
+	int		x;
+	int		y;
+	int		z;
+	int		xoffset;
+	int		yoffset;
+	int		scale;
 }	t_cam;
 
 typedef struct s_fdf
@@ -102,8 +111,12 @@ int		close_win(t_fdf *fdf);
 
 void	my_mlx_pixel_put(t_fdf *fdf, int x, int y, int color);
 void	draw_line(t_fdf *fdf, t_point b, t_point e, int color);
-void	iso(t_point	*p, int offset);
-t_point	create_point(int x, int y, int z);
+void	iso(t_point	*p, int xoffset, int yoffset);
+t_point	create_point(int x, int y, int z, t_fdf *fdf);
 void	draw_wire(t_fdf *fdf, int color);
+
+void	rotate_x(int *y, int *z, double alpha);
+void	rotate_y(int *x, int *z, double beta);
+void	rotate_z(int *x, int *y, double gamma);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/21 16:33:23 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/22 18:40:06 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	init_struct(t_fdf *fdf, int size_x, int size_y, int scale)
 	fdf->cam.x = 0;
 	fdf->cam.y = 0;
 	fdf->cam.z = Z;
+	fdf->cam.xoffset = 0;
+	fdf->cam.yoffset = 0;
+	fdf->cam.scale = SCALE;
+//	fdf->cam.alpha = 0;
+//	fdf->cam.beta = 0;
+//	fdf->cam.gamma = 0;
 }
 
 void	init_win(t_fdf *fdf, char *str)
@@ -29,6 +35,8 @@ void	init_win(t_fdf *fdf, char *str)
 	fdf->map.x = fdf->map.xmax + ft_abs(fdf->map.xmin) + SCALE * 4;
 	fdf->map.y = fdf->map.ymax + SCALE;
 	fdf->mlx = mlx_init();
+	fdf->map.x = 1920;
+	fdf->map.y = 1080;
 	fdf->win = mlx_new_window(fdf->mlx, fdf->map.x, fdf->map.y, str);
 	fdf->img = mlx_new_image(fdf->mlx, fdf->map.x, fdf->map.y);
 	fdf->data_addr = mlx_get_data_addr(fdf->img, &fdf->bits_per_pixel, &fdf->size_line, &fdf->endian);
@@ -94,7 +102,7 @@ void	search_values(t_fdf *fdf)
 			b.x = i * SCALE;
 			b.y = (j + 2) * SCALE;
 			b.z = fdf->map.wire[j][i] * fdf->cam.z;
-			iso(&b, 0);
+			iso(&b, 0, 0);
 			fdf->map.xmin = ft_min(b.x, fdf->map.xmin);
 			fdf->map.xmax = ft_max(b.x, fdf->map.xmax);
 			fdf->map.ymax = ft_max(b.y, fdf->map.ymax);

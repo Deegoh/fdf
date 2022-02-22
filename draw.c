@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/21 14:47:08 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/22 11:51:02 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	draw_line(t_fdf *fdf, t_point b, t_point e, int color)
 	}
 }
 
-void	iso(t_point	*p, int offset)
+void	iso(t_point	*p, int xoffset, int yoffset)
 {
 	double	previous_x;
 	double	previous_y;
@@ -53,16 +53,19 @@ void	iso(t_point	*p, int offset)
 	previous_y = p->y;
 	p->x = (previous_x - previous_y) * cos(0.523599);
 	p->y = -p->z + (previous_x + previous_y) * sin(0.523599);
-	if (offset)
-		p->x += offset;
+	if (xoffset)
+	{
+		p->x += xoffset;
+		p->y += yoffset;
+	}
 }
 
-t_point	create_point(int x, int y, int z)
+t_point	create_point(int x, int y, int z, t_fdf *fdf)
 {
 	t_point	point;
 
-	point.x = x * SCALE;
-	point.y = y * SCALE;
+	point.x = x * fdf->cam.scale;
+	point.y = y * fdf->cam.scale;
 	point.z = z;
 	return (point);
 }
@@ -75,20 +78,20 @@ void	draw_wire(t_fdf *fdf, int color)
 	t_point	e;
 	int		x;
 
-	x = ft_abs(fdf->map.xmin) + SCALE;
+	x = ft_abs(fdf->map.xmin) + fdf->cam.scale;
 	j = -1;
 	while (++j < fdf->map.ylen - 1)
 	{
 		i = -1;
 		while (++i < fdf->map.xlen - 1)
 		{
-			b = create_point(i, j + 1, fdf->map.wire[j][i] * fdf->cam.z);
-			e = create_point(i + 1, j + 1, fdf->map.wire[j][i + 1] * fdf->cam.z);
-			iso(&b, x);
-			iso(&e, x);
+			b = create_point(i, j + 1, fdf->map.wire[j][i] * fdf->cam.z, fdf);
+			e = create_point(i + 1, j + 1, fdf->map.wire[j][i + 1] * fdf->cam.z, fdf);
+			iso(&b, x + fdf->cam.xoffset, fdf->cam.yoffset);
+			iso(&e, x + fdf->cam.xoffset, fdf->cam.yoffset);
 			draw_line(fdf, b, e, color);
-			e = create_point(i, j + 2, fdf->map.wire[j + 1][i] * fdf->cam.z);
-			iso(&e, x);
+			e = create_point(i, j + 2, fdf->map.wire[j + 1][i] * fdf->cam.z, fdf);
+			iso(&e, x + fdf->cam.xoffset, fdf->cam.yoffset);
 			draw_line(fdf, b, e, color);
 		}
 	}
