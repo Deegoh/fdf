@@ -6,16 +6,14 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/22 18:40:06 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/25 19:25:50 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	init_struct(t_fdf *fdf, int size_x, int size_y, int scale)
+void	init_struct(t_fdf *fdf)
 {
-	fdf->map.x = (size_x + 0) * scale * 1.4;
-	fdf->map.y = (size_y + 0) * scale * 1.4;
 	fdf->map.xmin = 0;
 	fdf->map.xmax = 0;
 	fdf->map.ymax = 0;
@@ -25,9 +23,9 @@ void	init_struct(t_fdf *fdf, int size_x, int size_y, int scale)
 	fdf->cam.xoffset = 0;
 	fdf->cam.yoffset = 0;
 	fdf->cam.scale = SCALE;
-//	fdf->cam.alpha = 0;
-//	fdf->cam.beta = 0;
-//	fdf->cam.gamma = 0;
+	fdf->cam.alpha = 0;
+	fdf->cam.beta = 0;
+	fdf->cam.gamma = 0;
 }
 
 void	init_win(t_fdf *fdf, char *str)
@@ -37,9 +35,12 @@ void	init_win(t_fdf *fdf, char *str)
 	fdf->mlx = mlx_init();
 	fdf->map.x = 1920;
 	fdf->map.y = 1080;
+	fdf->cam.xoffset = (1920 - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
+	fdf->cam.yoffset = (1080 - fdf->map.ymax) / 2;
 	fdf->win = mlx_new_window(fdf->mlx, fdf->map.x, fdf->map.y, str);
 	fdf->img = mlx_new_image(fdf->mlx, fdf->map.x, fdf->map.y);
 	fdf->data_addr = mlx_get_data_addr(fdf->img, &fdf->bits_per_pixel, &fdf->size_line, &fdf->endian);
+	fdf->cam.isoxoffset = ft_abs(fdf->map.xmin) + fdf->cam.scale + fdf->cam.xoffset;
 }
 
 void	set_xlen(t_fdf *fdf)
@@ -47,13 +48,11 @@ void	set_xlen(t_fdf *fdf)
 	int	*xlen;
 	int	i;
 	int	j;
-	int	len;
 
 	i = -1;
 	j = 0;
 	xlen = ft_calloc(sizeof(xlen), fdf->map.ylen);
-	len = ft_strlen(fdf->map.map);
-	while (++i < len)
+	while (++i < ft_strlen(fdf->map.map))
 	{
 		if (fdf->map.map[i] == ' ')
 			continue ;
@@ -69,6 +68,7 @@ void	set_xlen(t_fdf *fdf)
 		}
 	}
 	fdf->map.xlen = check_xlen(xlen);
+	free(xlen);
 }
 
 void	set_ylen(t_fdf *fdf)
@@ -76,7 +76,7 @@ void	set_ylen(t_fdf *fdf)
 	int	ylen;
 	int	i;
 
-	ylen = 0;
+	ylen = 1;
 	i = 0;
 	while (fdf->map.map[i])
 	{
@@ -84,7 +84,7 @@ void	set_ylen(t_fdf *fdf)
 			ylen++;
 		i++;
 	}
-	fdf->map.ylen = ylen + 1;
+	fdf->map.ylen = ylen;
 }
 
 void	search_values(t_fdf *fdf)
@@ -100,9 +100,9 @@ void	search_values(t_fdf *fdf)
 		while (++i < fdf->map.xlen - 1)
 		{
 			b.x = i * SCALE;
-			b.y = (j + 2) * SCALE;
+			b.y = j * SCALE;
 			b.z = fdf->map.wire[j][i] * fdf->cam.z;
-			iso(&b, 0, 0);
+			iso(fdf, &b);
 			fdf->map.xmin = ft_min(b.x, fdf->map.xmin);
 			fdf->map.xmax = ft_max(b.x, fdf->map.xmax);
 			fdf->map.ymax = ft_max(b.y, fdf->map.ymax);

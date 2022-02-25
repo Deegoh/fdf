@@ -8,6 +8,7 @@ SRC = fdf.c\
 	  draw.c\
 	  init_values.c\
 	  fdf_utils.c\
+	  rot.c\
 	  projection.c
 OBJ = $(SRC:.c=.o)
 

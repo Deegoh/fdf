@@ -5,38 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/18 13:05:43 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/18 13:09:00 by tpinto-m         ###   ########.fr       */
+/*   Created: 2022/02/25 20:21:08 by tpinto-m          #+#    #+#             */
+/*   Updated: 2022/02/25 20:21:08 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	rotate_x(int *y, int *z, double alpha)
+void	iso(t_point	*p, int xoffset, int yoffset)
 {
-	int	previous_y;
+	double	previous_x;
+	double	previous_y;
 
-	previous_y = *y;
-	*y = previous_y * cos(alpha) + *z * sin(alpha);
-	*z = -previous_y * sin(alpha) + *z * cos(alpha);
+	previous_x = p->x;
+	previous_y = p->y;
+	p->x = (previous_x - previous_y) * cos(0.523599);
+	p->y = -p->z + (previous_x + previous_y) * sin(0.523599);
+	if (xoffset)
+		p->x += xoffset;
+	if (yoffset)
+		p->y += yoffset;
 }
 
-void	rotate_y(int *x, int *z, double beta)
+void	isocoor(t_fdf *fdf, t_coor	*pts)
 {
-	int	previous_x;
+	int		x;
+	int		y;
 
-	previous_x = *x;
-	*x = previous_x * cos(beta) + *z * sin(beta);
-	*z = -previous_x * sin(beta) + *z * cos(beta);
+	x = ft_abs(fdf->map.xmin) + fdf->cam.scale + fdf->cam.xoffset;
+	y = fdf->cam.yoffset;
+	iso(&pts->b, x, y);
+	iso(&pts->e, x, y);
 }
 
-void	rotate_z(int *x, int *y, double gamma)
+t_point	create_point(int x, int y, int z, t_fdf *fdf)
 {
-	int	previous_x;
-	int	previous_y;
+	t_point	point;
 
-	previous_x = *x;
-	previous_y = *y;
-	*x = previous_x * cos(gamma) - previous_y * sin(gamma);
-	*y = previous_x * sin(gamma) + previous_y * cos(gamma);
+	point.x = x * fdf->cam.scale;
+	point.y = y * fdf->cam.scale;
+	point.z = z;
+	return (point);
 }

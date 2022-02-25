@@ -6,20 +6,11 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/22 18:33:59 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/25 19:21:47 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	mouse_hook(int mousecode, int x, int y, t_fdf *fdf)
-{
-	(void)fdf;
-	(void)mousecode;
-	(void)x;
-	(void)y;
-	return (0);
-}
 
 void	move(int keycode, t_fdf *fdf)
 {
@@ -51,25 +42,28 @@ void	reset(int keycode, t_fdf *fdf)
 	{
 		fdf->cam.scale = SCALE;
 		fdf->cam.z = Z;
-		fdf->cam.yoffset = 0;
-		fdf->cam.xoffset = 0;
-//		fdf->cam.alpha = 0;
-//		fdf->cam.beta = 0;
-//		fdf->cam.gamma = 0;
+		fdf->cam.yoffset = (1080 - fdf->map.ymax) / 2;
+		fdf->cam.xoffset = (1920 - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
+		fdf->cam.alpha = 0;
+		fdf->cam.beta = 0;
+		fdf->cam.gamma = 0;
 	}
 }
 
 void	rot(int keycode, t_fdf *fdf)
 {
-	(void)fdf;
-	if (keycode == UP)
-		printf("hello\n");
-	if (keycode == DOWN)
-		printf("hello\n");
-	if (keycode == LEFT)
-		printf("hello\n");
-	if (keycode == RIGHT)
-		printf("hello\n");
+	if (keycode == I)
+		fdf->cam.alpha += 0.05;
+	if (keycode == K)
+		fdf->cam.alpha -= 0.05;
+	if (keycode == J)
+		fdf->cam.beta += 0.05;
+	if (keycode == L)
+		fdf->cam.beta -= 0.05;
+	if (keycode == U)
+		fdf->cam.gamma += 0.05;
+	if (keycode == O)
+		fdf->cam.gamma -= 0.05;
 }
 
 int	key_hook(int keycode, t_fdf *fdf)
@@ -79,14 +73,8 @@ int	key_hook(int keycode, t_fdf *fdf)
 		close_win(fdf);
 	scale(keycode, fdf);
 	move(keycode, fdf);
-//	rot(keycode, fdf);
+	rot(keycode, fdf);
 	reset(keycode, fdf);
 	draw_wire(fdf, 0x00FFFFFF);
 	return (0);
-}
-
-void	set_hooks(t_fdf *fdf)
-{
-	mlx_hook(fdf->win, 2, 1L << 0, key_hook, fdf);
-	mlx_hook(fdf->win, 17, 0, close_win, fdf);
 }

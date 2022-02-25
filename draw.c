@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/22 11:51:02 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/25 20:13:01 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,56 +44,56 @@ void	draw_line(t_fdf *fdf, t_point b, t_point e, int color)
 	}
 }
 
-void	iso(t_point	*p, int xoffset, int yoffset)
-{
-	double	previous_x;
-	double	previous_y;
-
-	previous_x = p->x;
-	previous_y = p->y;
-	p->x = (previous_x - previous_y) * cos(0.523599);
-	p->y = -p->z + (previous_x + previous_y) * sin(0.523599);
-	if (xoffset)
-	{
-		p->x += xoffset;
-		p->y += yoffset;
-	}
-}
-
-t_point	create_point(int x, int y, int z, t_fdf *fdf)
-{
-	t_point	point;
-
-	point.x = x * fdf->cam.scale;
-	point.y = y * fdf->cam.scale;
-	point.z = z;
-	return (point);
-}
-
-void	draw_wire(t_fdf *fdf, int color)
+void	finish_draw(t_fdf *fdf, int color)
 {
 	int		i;
 	int		j;
-	t_point	b;
-	t_point	e;
-	int		x;
+	t_coor	pts;
 
-	x = ft_abs(fdf->map.xmin) + fdf->cam.scale;
 	j = -1;
 	while (++j < fdf->map.ylen - 1)
 	{
 		i = -1;
 		while (++i < fdf->map.xlen - 1)
 		{
-			b = create_point(i, j + 1, fdf->map.wire[j][i] * fdf->cam.z, fdf);
-			e = create_point(i + 1, j + 1, fdf->map.wire[j][i + 1] * fdf->cam.z, fdf);
-			iso(&b, x + fdf->cam.xoffset, fdf->cam.yoffset);
-			iso(&e, x + fdf->cam.xoffset, fdf->cam.yoffset);
-			draw_line(fdf, b, e, color);
-			e = create_point(i, j + 2, fdf->map.wire[j + 1][i] * fdf->cam.z, fdf);
-			iso(&e, x + fdf->cam.xoffset, fdf->cam.yoffset);
-			draw_line(fdf, b, e, color);
+			pts.b = create_point(i, fdf->map.ylen, 0 * fdf->cam.z, fdf);
+			pts.e = create_point(i + 1, fdf->map.ylen, 0 * fdf->cam.z, fdf);
+			rot_all(fdf, &pts);
+			isocoor(fdf, &pts);
+			draw_line(fdf, pts.b, pts.e, color);
+			pts.b = create_point(fdf->map.xlen - 1, fdf->map.ylen, 0 * fdf->cam.z, fdf);
+			pts.e = create_point(fdf->map.xlen - 1, j + 1, 0 * fdf->cam.z, fdf);
+			rot_all(fdf, &pts);
+			isocoor(fdf, &pts);
+			draw_line(fdf, pts.b, pts.e, color);
 		}
 	}
+}
+
+void	draw_wire(t_fdf *fdf, int color)
+{
+	int		i;
+	int		j;
+	t_coor	pts;
+
+	j = -1;
+	while (++j < fdf->map.ylen - 1)
+	{
+		i = -1;
+		while (++i < fdf->map.xlen - 1)
+		{
+			pts.b = create_point(i, j + 1, fdf->map.wire[j][i] * fdf->cam.z, fdf);
+			pts.e = create_point(i + 1, j + 1, fdf->map.wire[j][i + 1] * fdf->cam.z, fdf);
+			rot_all(fdf, &pts);
+			isocoor(fdf, &pts);
+			draw_line(fdf, pts.b, pts.e, color);
+			pts.b = create_point(i, j + 1, fdf->map.wire[j][i] * fdf->cam.z, fdf);
+			pts.e = create_point(i, j + 2, fdf->map.wire[j + 1][i] * fdf->cam.z, fdf);
+			rot_all(fdf, &pts);
+			isocoor(fdf, &pts);
+			draw_line(fdf, pts.b, pts.e, color);
+		}
+	}
+	finish_draw(fdf, color);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }

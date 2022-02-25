@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/10 12:53:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/25 11:59:34 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	read_map(char *file, t_fdf *fdf)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return ;
+	fdf->map.map = ft_strdup("");
 	while (fd >= 0)
 	{
 		tmp = get_next_line(fd);
@@ -40,9 +41,7 @@ int	check_xlen(int *xlen)
 
 	i = -1;
 	while (xlen[++i])
-	{
 		if (xlen[0] != xlen[i])
-			display_err("x lenght");
-	}
+			display_err("error size map");
 	return (xlen[0]);
 }
