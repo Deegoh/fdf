@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/25 20:13:01 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 11:33:30 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	finish_draw(t_fdf *fdf, int color)
 		i = -1;
 		while (++i < fdf->map.xlen - 1)
 		{
-			pts.b = create_point(i, fdf->map.ylen, 0 * fdf->cam.z, fdf);
-			pts.e = create_point(i + 1, fdf->map.ylen, 0 * fdf->cam.z, fdf);
+			pts.b = create_point(i, fdf->map.ylen, fdf->map.wire[fdf->map.ylen - 1][i] * fdf->cam.z, fdf);
+			pts.e = create_point(i + 1, fdf->map.ylen, fdf->map.wire[fdf->map.ylen - 1][i + 1] * fdf->cam.z, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
 			draw_line(fdf, pts.b, pts.e, color);
-			pts.b = create_point(fdf->map.xlen - 1, fdf->map.ylen, 0 * fdf->cam.z, fdf);
-			pts.e = create_point(fdf->map.xlen - 1, j + 1, 0 * fdf->cam.z, fdf);
+			pts.b = create_point(fdf->map.xlen - 1, j + 1, fdf->map.wire[j + 0][fdf->map.xlen - 1] * fdf->cam.z, fdf);
+			pts.e = create_point(fdf->map.xlen - 1, j + 2, fdf->map.wire[j + 1][fdf->map.xlen - 1] * fdf->cam.z, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
 			draw_line(fdf, pts.b, pts.e, color);
