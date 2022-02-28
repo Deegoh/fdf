@@ -6,21 +6,24 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 20:21:08 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/25 20:21:08 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:17:25 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	iso(t_point	*p, int xoffset, int yoffset)
+void	iso(t_point	*p, int xoffset, int yoffset, int view)
 {
 	double	previous_x;
 	double	previous_y;
 
-	previous_x = p->x;
-	previous_y = p->y;
-	p->x = (previous_x - previous_y) * cos(0.523599);
-	p->y = -p->z + (previous_x + previous_y) * sin(0.523599);
+	if (view == isom)
+	{
+		previous_x = p->x;
+		previous_y = p->y;
+		p->x = (previous_x - previous_y) * cos(0.523599);
+		p->y = -p->z + (previous_x + previous_y) * sin(0.523599);
+	}
 	if (xoffset)
 		p->x += xoffset;
 	if (yoffset)
@@ -34,8 +37,8 @@ void	isocoor(t_fdf *fdf, t_coor	*pts)
 
 	x = ft_abs(fdf->map.xmin) + fdf->cam.scale + fdf->cam.xoffset;
 	y = fdf->cam.yoffset;
-	iso(&pts->b, x, y);
-	iso(&pts->e, x, y);
+	iso(&pts->b, x, y, fdf->cam.view);
+	iso(&pts->e, x, y, fdf->cam.view);
 }
 
 t_point	create_point(int x, int y, int z, t_fdf *fdf)

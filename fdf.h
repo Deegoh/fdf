@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/25 20:26:07 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 11:54:10 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -30,16 +30,18 @@
 # define F 3
 # define ESC 53
 # define SPACE 49
-
 # define U 32
 # define O 31
 # define I 34
 # define K 40
 # define J 38
 # define L 37
+# define P 35
 
 # define SCALE 20
 # define Z 12
+
+enum e_proj{isom, cart};
 
 typedef struct s_map {
 	int		x;
@@ -57,6 +59,7 @@ typedef struct s_map {
 
 typedef struct s_cam
 {
+	int		view;
 	double	beta;
 	double	gamma;
 	double	alpha;
@@ -129,7 +132,7 @@ void	draw_wire(t_fdf *fdf, int color);
 void	finish_draw(t_fdf *fdf, int color);
 
 t_point	create_point(int x, int y, int z, t_fdf *fdf);
-void	iso(t_point	*p, int xoffset, int yoffset);
+void	iso(t_point	*p, int xoffset, int yoffset, int view);
 void	isocoor(t_fdf *fdf, t_coor	*pts);
 
 void	rotate_x(int *y, int *z, double alpha);

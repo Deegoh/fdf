@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/25 19:21:47 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 13:23:58 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	reset(int keycode, t_fdf *fdf)
 {
 	if (keycode == SPACE)
 	{
-		fdf->cam.scale = SCALE;
-		fdf->cam.z = Z;
 		fdf->cam.yoffset = (1080 - fdf->map.ymax) / 2;
 		fdf->cam.xoffset = (1920 - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
+		fdf->cam.scale = SCALE;
+		fdf->cam.z = Z;
 		fdf->cam.alpha = 0;
 		fdf->cam.beta = 0;
 		fdf->cam.gamma = 0;
@@ -66,6 +66,17 @@ void	rot(int keycode, t_fdf *fdf)
 		fdf->cam.gamma -= 0.05;
 }
 
+void	view(int keycode, t_fdf *fdf)
+{
+	if (keycode == P)
+	{
+		if (fdf->cam.view == isom)
+			fdf->cam.view = cart;
+		else
+			fdf->cam.view = isom;
+	}
+}
+
 int	key_hook(int keycode, t_fdf *fdf)
 {
 	draw_wire(fdf, 0x00000000);
@@ -74,6 +85,7 @@ int	key_hook(int keycode, t_fdf *fdf)
 	scale(keycode, fdf);
 	move(keycode, fdf);
 	rot(keycode, fdf);
+	view(keycode, fdf);
 	reset(keycode, fdf);
 	draw_wire(fdf, 0x00FFFFFF);
 	return (0);

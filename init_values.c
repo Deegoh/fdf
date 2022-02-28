@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/25 19:25:50 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 12:57:02 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_struct(t_fdf *fdf)
 	fdf->cam.alpha = 0;
 	fdf->cam.beta = 0;
 	fdf->cam.gamma = 0;
+	fdf->cam.view = 0;
 }
 
 void	init_win(t_fdf *fdf, char *str)
@@ -102,7 +103,7 @@ void	search_values(t_fdf *fdf)
 			b.x = i * SCALE;
 			b.y = j * SCALE;
 			b.z = fdf->map.wire[j][i] * fdf->cam.z;
-			iso(fdf, &b);
+			iso(&b, 0, 0, fdf->cam.view);
 			fdf->map.xmin = ft_min(b.x, fdf->map.xmin);
 			fdf->map.xmax = ft_max(b.x, fdf->map.xmax);
 			fdf->map.ymax = ft_max(b.y, fdf->map.ymax);
