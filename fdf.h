@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/28 11:54:10 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:57:21 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -68,8 +68,6 @@ typedef struct s_cam
 	int		z;
 	int		xoffset;
 	int		yoffset;
-	int		isoxoffset;
-	int		isoyoffset;
 	int		scale;
 }	t_cam;
 
@@ -128,8 +126,8 @@ int		close_win(t_fdf *fdf);
 
 void	my_mlx_pixel_put(t_fdf *fdf, int x, int y, int color);
 void	draw_line(t_fdf *fdf, t_point b, t_point e, int color);
-void	draw_wire(t_fdf *fdf, int color);
-void	finish_draw(t_fdf *fdf, int color);
+void	draw_wire(t_fdf *fdf);
+void	finish_draw(t_fdf *fdf);
 
 t_point	create_point(int x, int y, int z, t_fdf *fdf);
 void	iso(t_point	*p, int xoffset, int yoffset, int view);
@@ -139,5 +137,8 @@ void	rotate_x(int *y, int *z, double alpha);
 void	rotate_y(int *x, int *z, double beta);
 void	rotate_z(int *x, int *y, double gamma);
 void	rot_all(t_fdf *fdf, t_coor	*pts);
+
+int	get_color(t_fdf *fdf, t_point b, t_point e);
+void	draw_wire_black(t_fdf *fdf);
 
 #endif

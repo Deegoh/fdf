@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/25 14:29:18 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:51:57 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int ac, char *av[])
 		init_struct(&fdf);
 		search_values(&fdf);
 		init_win(&fdf, "Hello fdf!");
-		draw_wire(&fdf, 0x00FFFFFF);
+		draw_wire(&fdf);
 		set_hooks(&fdf);
 		mlx_loop(fdf.mlx);
 	}

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/28 12:57:02 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:38:20 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	init_win(t_fdf *fdf, char *str)
 	fdf->win = mlx_new_window(fdf->mlx, fdf->map.x, fdf->map.y, str);
 	fdf->img = mlx_new_image(fdf->mlx, fdf->map.x, fdf->map.y);
 	fdf->data_addr = mlx_get_data_addr(fdf->img, &fdf->bits_per_pixel, &fdf->size_line, &fdf->endian);
-	fdf->cam.isoxoffset = ft_abs(fdf->map.xmin) + fdf->cam.scale + fdf->cam.xoffset;
 }
 
 void	set_xlen(t_fdf *fdf)
