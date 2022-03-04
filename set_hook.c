@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/28 17:05:41 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/04 11:10:30 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	view(int keycode, t_fdf *fdf)
 
 int	key_hook(int keycode, t_fdf *fdf)
 {
-	draw_wire_black(fdf);
+	rm_wire(fdf);
 	if (keycode == ESC)
 		close_win(fdf);
 	scale(keycode, fdf);
@@ -87,6 +87,6 @@ int	key_hook(int keycode, t_fdf *fdf)
 	rot(keycode, fdf);
 	view(keycode, fdf);
 	reset(keycode, fdf);
-	draw_wire(fdf);
+	put_wire(fdf);
 	return (0);
 }

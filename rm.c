@@ -1,32 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   rm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/04 13:24:55 by tpinto-m         ###   ########.fr       */
+/*   Created: 2022/03/04 11:54:16 by tpinto-m          #+#    #+#             */
+/*   Updated: 2022/03/04 13:17:04 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	put_pixel(t_fdf *fdf, int x, int y, int color)
-{
-	int	dst;
-
-	if (x <= 1920 && x >= 0 && y <= 1080 && y >= 0)
-	{
-		dst = (y * fdf->size_line + x * (fdf->bits_per_pixel / 8));
-		fdf->data_addr[dst] = color;
-		fdf->data_addr[++dst] = color >> 8;
-		fdf->data_addr[++dst] = color >> 16;
-	}
-//	*(unsigned int *)dst = color;
-}
-
-void	put_line(t_fdf *fdf, t_point b, t_point e)
+//void	rm_line(t_fdf *fdf, t_point b, t_point e)
+//{
+//	double	deltax;
+//	double	deltay;
+//	double	pixelx;
+//	double	pixely;
+//	int		pixels;
+//
+//	deltax = e.x - b.x;
+//	deltay = e.y - b.y;
+//	pixelx = b.x;
+//	pixely = b.y;
+//	pixels = (int)sqrt((deltax * deltax) + (deltay * deltay));
+//	deltax /= pixels;
+//	deltay /= pixels;
+//	while (pixels)
+//	{
+//		put_pixel(fdf, (int)pixelx, (int)pixely, BLACK);
+//		pixelx += deltax;
+//		pixely += deltay;
+//		--pixels;
+//	}
+//}
+void	rm_line(t_fdf *fdf, t_point b, t_point e)
 {
 	t_point	delta;
 	t_point	sign;
@@ -41,7 +50,7 @@ void	put_line(t_fdf *fdf, t_point b, t_point e)
 	cur = e;
 	while (cur.x != b.x || cur.y != b.y)
 	{
-		put_pixel(fdf, cur.x, cur.y, get_color(cur, b, e, delta));
+		put_pixel(fdf, cur.x, cur.y, BLACK);
 		if ((error[1] = error[0] * 2) > -delta.y)
 		{
 			error[0] -= delta.y;
@@ -55,7 +64,7 @@ void	put_line(t_fdf *fdf, t_point b, t_point e)
 	}
 }
 
-void	put_lastwire(t_fdf *fdf)
+void	rm_finish_wire(t_fdf *fdf)
 {
 	int		i;
 	int		j;
@@ -71,17 +80,17 @@ void	put_lastwire(t_fdf *fdf)
 			pts.e = new_point(i + 1, fdf->map.ylen, fdf->map.wire[fdf->map.ylen - 1][i + 1] * fdf->cam.z, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
-			put_line(fdf, pts.b, pts.e);
+			rm_line(fdf, pts.b, pts.e);
 			pts.b = new_point(fdf->map.xlen - 1, j + 1, fdf->map.wire[j][fdf->map.xlen - 1] * fdf->cam.z, fdf);
 			pts.e = new_point(fdf->map.xlen - 1, j + 2, fdf->map.wire[j + 1][fdf->map.xlen - 1] * fdf->cam.z, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
-			put_line(fdf, pts.b, pts.e);
+			rm_line(fdf, pts.b, pts.e);
 		}
 	}
 }
 
-void	put_wire(t_fdf *fdf)
+void	rm_wire(t_fdf *fdf)
 {
 	int		i;
 	int		j;
@@ -97,14 +106,14 @@ void	put_wire(t_fdf *fdf)
 			pts.e = new_point(i + 1, j + 1, fdf->map.wire[j][i + 1] * fdf->cam.z, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
-			put_line(fdf, pts.b, pts.e);
+			rm_line(fdf, pts.b, pts.e);
 			pts.b = new_point(i, j + 1, fdf->map.wire[j][i] * fdf->cam.z, fdf);
 			pts.e = new_point(i, j + 2, fdf->map.wire[j + 1][i] * fdf->cam.z, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
-			put_line(fdf, pts.b, pts.e);
+			rm_line(fdf, pts.b, pts.e);
 		}
 	}
-	put_lastwire(fdf);
+	rm_finish_wire(fdf);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }

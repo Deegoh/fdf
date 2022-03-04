@@ -68,7 +68,7 @@ int	main(int ac, char *av[])
 		init_struct(&fdf);
 		search_values(&fdf);
 		init_win(&fdf, "Hello fdf!");
-		draw_wire(&fdf);
+		put_wire(&fdf);
 		set_hooks(&fdf);
 		mlx_loop(fdf.mlx);
 	}

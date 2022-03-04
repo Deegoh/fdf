@@ -10,7 +10,8 @@ SRC = fdf.c\
 	  fdf_utils.c\
 	  rot.c\
 	  projection.c\
-	  color.c
+	  color.c\
+	  rm.c
 OBJ = $(SRC:.c=.o)
 
 MAP_DIR = test_maps/
