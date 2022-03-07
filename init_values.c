@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/28 16:38:20 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/07 15:32:55 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init_struct(t_fdf *fdf)
 	fdf->map.xmax = 0;
 	fdf->map.ymax = 0;
 	fdf->cam.x = 0;
-	fdf->cam.y = 0;
 	fdf->cam.z = Z;
 	fdf->cam.xoffset = 0;
 	fdf->cam.yoffset = 0;

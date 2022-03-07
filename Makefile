@@ -31,7 +31,7 @@ all: $(NAME)
 $(NAME): libx libft $(OBJ)
 	$(CC) $(CFLAGS) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
 exec: all
-	./$(NAME) test_maps/42.fdf
+	./$(NAME) test_maps/basictest.fdf
 norm:
 	norminette $(SRC)
 libx:
@@ -40,7 +40,7 @@ libft:
 	@$(MAKE) -sC $(LIBFT_DIR)
 clean:
 	rm -rf $(OBJ)
-	@$(MAKE) -sC $(MINILIBX_DIR) clean
+	@#$(MAKE) -sC $(MINILIBX_DIR) clean
 	@$(MAKE) -sC $(LIBFT_DIR) clean
 fclean: clean
 	rm -rf $(NAME)

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/04 13:50:02 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/07 14:50:06 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -39,7 +39,7 @@
 # define P 35
 
 # define SCALE 20
-# define Z 12
+# define Z 1
 
 # define COLOR1 0x00023880
 # define COLOR2 0x002181FF
@@ -60,8 +60,8 @@ typedef struct s_map {
 	int		xmin;
 	int		xmax;
 	int		ymax;
-	int		zmin;
-	int		zmax;
+	int 	zmin;
+	int 	zmax;
 }				t_map;
 
 typedef struct s_cam
@@ -72,7 +72,7 @@ typedef struct s_cam
 	double	alpha;
 	int		x;
 	int		y;
-	int		z;
+	int 	z;
 	int		xoffset;
 	int		yoffset;
 	int		scale;
@@ -97,13 +97,6 @@ typedef struct s_point {
 	int	z;
 	int	color;
 }				t_point;
-
-typedef struct s_dp {
-	double	x;
-	double	y;
-	double	z;
-	int	color;
-}				t_dp;
 
 typedef struct s_coor
 {

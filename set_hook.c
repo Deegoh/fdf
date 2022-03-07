@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/04 11:10:30 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/07 15:39:52 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ void	move(int keycode, t_fdf *fdf)
 void	scale(int keycode, t_fdf *fdf)
 {
 	if (keycode == Q)
-		fdf->cam.z -= 1;
+		if (fdf->map.zmin - 10 < fdf->cam.z)
+			fdf->cam.z -= 1;
 	if (keycode == E)
-		fdf->cam.z += 1;
+		if (fdf->map.zmax + 10 > fdf->cam.z)
+			fdf->cam.z += 1;
 	if (keycode == R)
 		fdf->cam.scale += 1;
 	if (keycode == F)
