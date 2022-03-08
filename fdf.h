@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/07 14:50:06 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/08 11:47:59 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -60,8 +60,9 @@ typedef struct s_map {
 	int		xmin;
 	int		xmax;
 	int		ymax;
-	int 	zmin;
-	int 	zmax;
+	int		zmin;
+	int		zmax;
+	int		zdelta;
 }				t_map;
 
 typedef struct s_cam
@@ -72,7 +73,7 @@ typedef struct s_cam
 	double	alpha;
 	int		x;
 	int		y;
-	int 	z;
+	int		z;
 	int		xoffset;
 	int		yoffset;
 	int		scale;
@@ -132,7 +133,7 @@ void	display_err(const char *str);
 int		close_win(t_fdf *fdf);
 
 void	put_pixel(t_fdf *fdf, int x, int y, int color);
-void	put_line(t_fdf *fdf, t_point b, t_point e);
+void	put_line(t_fdf *fdf, t_point b, t_point e, int color);
 void	put_wire(t_fdf *fdf);
 void	put_lastwire(t_fdf *fdf);
 
@@ -145,9 +146,8 @@ void	rotate_y(int *x, int *z, double beta);
 void	rotate_z(int *x, int *y, double gamma);
 void	rot_all(t_fdf *fdf, t_coor	*pts);
 
+double	ft_percent(int start, int end, int current);
 int		get_default_color(int z, t_fdf *fdf);
-//int		get_color(t_fdf *fdf, t_point b, t_point e);
-int		get_color(t_point current, t_point start, t_point end, t_point delta);
 void	rm_wire(t_fdf *fdf);
 void	rm_lastwire(t_fdf *fdf);
 void	rm_line(t_fdf *fdf, t_point b, t_point e);

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/07 15:32:55 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/08 11:12:29 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_win(t_fdf *fdf, char *str)
 {
 	fdf->map.x = fdf->map.xmax + ft_abs(fdf->map.xmin) + SCALE * 4;
 	fdf->map.y = fdf->map.ymax + SCALE;
+	fdf->map.zdelta = ft_abs(fdf->map.zmin) + ft_abs(fdf->map.zmax);
 	fdf->mlx = mlx_init();
 	fdf->map.x = 1920;
 	fdf->map.y = 1080;

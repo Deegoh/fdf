@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 16:30:21 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/07 16:04:54 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/08 11:25:10 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,32 +43,26 @@ int	get_default_color(int z, t_fdf *fdf)
 		return (COLOR1);
 }
 
-int	get_light(int start, int end, double percentage)
-{
-	return ((int)((1 - percentage) * start + percentage * end));
-}
+//int	get_light(int start, int end, double percentage)
+//{
+//	return ((int)((1 - percentage) * start + percentage * end));
+//}
 
-int	get_color(t_point current, t_point start, t_point end, t_point delta)
-{
-	int		red;
-	int		green;
-	int		blue;
-	double	percentage;
-
-	if (current.color == end.color)
-		return (current.color);
-	if (delta.x > delta.y)
-		percentage = ft_percent(start.x, end.x, current.x);
-	else
-		percentage = ft_percent(start.y, end.y, current.y);
-	red = get_light((start.color >> 16) & 0xFF,
-					(end.color >> 16) & 0xFF,
-					percentage);
-	green = get_light((start.color >> 8) & 0xFF,
-					  (end.color >> 8) & 0xFF,
-					  percentage);
-	blue = get_light(start.color & 0xFF,
-					 end.color & 0xFF,
-					 percentage);
-	return ((red << 16) | (green << 8) | blue);
-}
+//int	get_color(t_point current, t_point start, t_point end, t_point delta)
+//{
+//	int		red;
+//	int		green;
+//	int		blue;
+//	double	per;
+//
+//	if (current.color == end.color)
+//		return (current.color);
+//	if (delta.x > delta.y)
+//		per = ft_percent(start.x, end.x, current.x);
+//	else
+//		per = ft_percent(start.y, end.y, current.y);
+//	red = get_light((start.color >> 16) & 0xFF, (end.color >> 16) & 0xFF, per);
+//	green = get_light((start.color >> 8) & 0xFF, (end.color >> 8) & 0xFF, per);
+//	blue = get_light(start.color & 0xFF, end.color & 0xFF, per);
+//	return ((red << 16) | (green << 8) | blue);
+//}
