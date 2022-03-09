@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/08 11:25:18 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/09 14:37:11 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@
 //	printf("scale:%d\n", SCALE);
 //	printf("\n");
 //	printf("value test\n");
-//	printf("zdelta:%d\n", fdf.map.zdelta);
+//	printf("endian:%d\n", fdf.endian);
+//	printf("size_line:%d\n", fdf.line);
+//	printf("bits_per_pixel:%d\n", fdf.bits);
 //}
 
 void	set_hooks(t_fdf *fdf)

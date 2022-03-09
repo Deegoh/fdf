@@ -41,8 +41,8 @@ libft:
 	@$(MAKE) -sC $(LIBFT_DIR)
 clean:
 	rm -rf $(OBJ)
-	@$(MAKE) -sC $(MINILIBX_DIR) clean
-	@$(MAKE) -sC $(LIBFT_DIR) clean
+	@#$(MAKE) -sC $(MINILIBX_DIR) clean
+	@#$(MAKE) -sC $(LIBFT_DIR) clean
 fclean: clean
 	rm -rf $(NAME)
 	@$(MAKE) -sC $(LIBFT_DIR) fclean

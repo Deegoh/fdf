@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/09 13:27:52 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/09 13:28:25 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,15 @@ void	scale(int keycode, t_fdf *fdf)
 	if (keycode == E)
 		fdf->cam.z += 1;
 	if (keycode == R)
+	{
+		fdf->cam.z += 1;
 		fdf->cam.scale += 1;
+	}
 	if (keycode == F)
+	{
+		fdf->cam.z -= 1;
 		fdf->cam.scale -= 1;
+	}
 }
 
 void	reset(int keycode, t_fdf *fdf)
