@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/08 11:47:59 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/09 14:14:54 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -39,13 +39,16 @@
 # define P 35
 
 # define SCALE 20
-# define Z 1
+# define Z 10
+# define HEIGHT 1080
+# define WIDTH 1920
 
-# define COLOR1 0x00023880
-# define COLOR2 0x002181FF
-# define COLOR3 0x00065CCC
-# define COLOR4 0x00805300
-# define COLOR5 0x00CC8706
+# define RED 0x00FF0018
+# define SAFFRON 0x00FFA52C
+# define YELLOW 0x00FFFF41
+# define AO 0x00008018
+# define BLUE 0x000000F9
+# define VIOLET 0x0086007D
 # define BLACK 0x00000000
 
 enum e_proj{isom, cart};
@@ -62,7 +65,6 @@ typedef struct s_map {
 	int		ymax;
 	int		zmin;
 	int		zmax;
-	int		zdelta;
 }				t_map;
 
 typedef struct s_cam
@@ -84,9 +86,9 @@ typedef struct s_fdf
 	void				*mlx;
 	void				*win;
 	void				*img;
-	char				*data_addr;
-	int					bits_per_pixel;
-	int					size_line;
+	char				*addr;
+	int					bits;
+	int					line;
 	int					endian;
 	t_map				map;
 	t_cam				cam;
@@ -115,7 +117,6 @@ void	scale(int keycode, t_fdf *fdf);
 void	reset(int keycode, t_fdf *fdf);
 void	rot(int keycode, t_fdf *fdf);
 int		key_hook(int keycode, t_fdf *fdf);
-void	set_hooks(t_fdf *fdf);
 
 void	read_map(char *file, t_fdf *fdf);
 int		check_xlen(int *xlen);
@@ -133,13 +134,15 @@ void	display_err(const char *str);
 int		close_win(t_fdf *fdf);
 
 void	put_pixel(t_fdf *fdf, int x, int y, int color);
+void	sign_pts(t_point *sign, t_point b, t_point e);
 void	put_line(t_fdf *fdf, t_point b, t_point e, int color);
 void	put_wire(t_fdf *fdf);
 void	put_lastwire(t_fdf *fdf);
 
-t_point	new_point(int x, int y, int z, t_fdf *fdf);
+t_point	new_pts(int x, int y, int z, t_fdf *fdf);
 void	iso(t_point	*p, int xoffset, int yoffset, int view);
 void	isocoor(t_fdf *fdf, t_coor	*pts);
+void	view(int keycode, t_fdf *fdf);
 
 void	rotate_x(int *y, int *z, double alpha);
 void	rotate_y(int *x, int *z, double beta);
@@ -148,8 +151,10 @@ void	rot_all(t_fdf *fdf, t_coor	*pts);
 
 double	ft_percent(int start, int end, int current);
 int		get_default_color(int z, t_fdf *fdf);
+
 void	rm_wire(t_fdf *fdf);
-void	rm_lastwire(t_fdf *fdf);
-void	rm_line(t_fdf *fdf, t_point b, t_point e);
+void	rm_finish_wire(t_fdf *fdf);
+
+char	*mlx_addr(void *img_ptr, int *bits, int *size, int *endian);
 
 #endif

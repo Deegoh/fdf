@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/08 11:12:29 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/09 13:28:25 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ void	init_win(t_fdf *fdf, char *str)
 {
 	fdf->map.x = fdf->map.xmax + ft_abs(fdf->map.xmin) + SCALE * 4;
 	fdf->map.y = fdf->map.ymax + SCALE;
-	fdf->map.zdelta = ft_abs(fdf->map.zmin) + ft_abs(fdf->map.zmax);
 	fdf->mlx = mlx_init();
-	fdf->map.x = 1920;
-	fdf->map.y = 1080;
-	fdf->cam.xoffset = (1920 - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
-	fdf->cam.yoffset = (1080 - fdf->map.ymax) / 2;
+	fdf->map.x = WIDTH;
+	fdf->map.y = HEIGHT;
+	fdf->cam.xoffset = (WIDTH - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
+	fdf->cam.yoffset = (HEIGHT - fdf->map.ymax) / 2;
 	fdf->win = mlx_new_window(fdf->mlx, fdf->map.x, fdf->map.y, str);
 	fdf->img = mlx_new_image(fdf->mlx, fdf->map.x, fdf->map.y);
-	fdf->data_addr = mlx_get_data_addr(fdf->img, &fdf->bits_per_pixel, &fdf->size_line, &fdf->endian);
+	fdf->addr = mlx_addr(fdf->img, &fdf->bits, &fdf->line, &fdf->endian);
 }
 
 void	set_xlen(t_fdf *fdf)

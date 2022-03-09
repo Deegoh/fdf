@@ -12,43 +12,43 @@
 
 #include "fdf.h"
 
-void	comment(t_fdf fdf)
-{
-	int	j;
-	int	i;
-
-	printf("map:\n%s", fdf.map.map);
-	printf("maplen:%d\n", ft_strlen(fdf.map.map));
-	printf("x:%d\n", fdf.map.x);
-	printf("y:%d\n", fdf.map.y);
-	printf("xlen:%d\n", fdf.map.xlen);
-	printf("ylen:%d\n", fdf.map.ylen);
-	printf("zmin:%d\n", fdf.map.zmin);
-	printf("zmax:%d\n", fdf.map.zmax);
-	printf("wire:\n");
-	i = -1;
-	while (++i < fdf.map.ylen)
-	{
-		j = -1;
-		while (++j < fdf.map.xlen)
-		{
-			if (fdf.map.zmin < 0 && j == 0 && fdf.map.wire[i][j] > -1)
-				printf(" ");
-			if (fdf.map.wire[i][j] < 10)
-				printf("%d  ", fdf.map.wire[i][j]);
-			else
-				printf("%d ", fdf.map.wire[i][j]);
-		}
-		printf("\n");
-	}
-	printf("minx:%d\n", fdf.map.xmin);
-	printf("maxx:%d\n", fdf.map.xmax);
-	printf("maxy:%d\n", fdf.map.ymax);
-	printf("scale:%d\n", SCALE);
-	printf("\n");
-	printf("value test\n");
-	printf("zdelta:%d\n", fdf.map.zdelta);
-}
+//void	comment(t_fdf fdf)
+//{
+//	int	j;
+//	int	i;
+//
+//	printf("map:\n%s", fdf.map.map);
+//	printf("maplen:%d\n", ft_strlen(fdf.map.map));
+//	printf("x:%d\n", fdf.map.x);
+//	printf("y:%d\n", fdf.map.y);
+//	printf("xlen:%d\n", fdf.map.xlen);
+//	printf("ylen:%d\n", fdf.map.ylen);
+//	printf("zmin:%d\n", fdf.map.zmin);
+//	printf("zmax:%d\n", fdf.map.zmax);
+//	printf("wire:\n");
+//	i = -1;
+//	while (++i < fdf.map.ylen)
+//	{
+//		j = -1;
+//		while (++j < fdf.map.xlen)
+//		{
+//			if (fdf.map.zmin < 0 && j == 0 && fdf.map.wire[i][j] > -1)
+//				printf(" ");
+//			if (fdf.map.wire[i][j] < 10)
+//				printf("%d  ", fdf.map.wire[i][j]);
+//			else
+//				printf("%d ", fdf.map.wire[i][j]);
+//		}
+//		printf("\n");
+//	}
+//	printf("minx:%d\n", fdf.map.xmin);
+//	printf("maxx:%d\n", fdf.map.xmax);
+//	printf("maxy:%d\n", fdf.map.ymax);
+//	printf("scale:%d\n", SCALE);
+//	printf("\n");
+//	printf("value test\n");
+//	printf("zdelta:%d\n", fdf.map.zdelta);
+//}
 
 void	set_hooks(t_fdf *fdf)
 {
@@ -69,7 +69,6 @@ int	main(int ac, char *av[])
 		init_struct(&fdf);
 		search_values(&fdf);
 		init_win(&fdf, "Hello fdf!");
-		comment(fdf);
 		put_wire(&fdf);
 		set_hooks(&fdf);
 		mlx_loop(fdf.mlx);

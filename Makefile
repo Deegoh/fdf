@@ -11,7 +11,8 @@ SRC = fdf.c\
 	  rot.c\
 	  projection.c\
 	  color.c\
-	  rm.c
+	  rm.c\
+	  mlx.c
 OBJ = $(SRC:.c=.o)
 
 MAP_DIR = test_maps/
@@ -30,7 +31,7 @@ all: $(NAME)
 
 $(NAME): libx libft $(OBJ)
 	$(CC) $(CFLAGS) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
-exec: all
+exec: clean all
 	./$(NAME) test_maps/basictest.fdf
 norm:
 	norminette $(SRC)

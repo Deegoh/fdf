@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 16:30:21 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/08 11:25:10 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/09 14:16:25 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,38 +31,16 @@ int	get_default_color(int z, t_fdf *fdf)
 	double	percentage;
 
 	percentage = ft_percent(fdf->map.zmin, fdf->map.zmax, z);
-	if (percentage < 0.2)
-		return (COLOR5);
-	else if (percentage < 0.4)
-		return (COLOR4);
-	else if (percentage < 0.6)
-		return (COLOR3);
-	else if (percentage < 0.8)
-		return (COLOR2);
+	if (percentage < 0.16)
+		return (RED);
+	else if (percentage < 0.33)
+		return (SAFFRON);
+	else if (percentage < 0.5)
+		return (YELLOW);
+	else if (percentage < 0.66)
+		return (AO);
+	else if (percentage < 0.83)
+		return (BLUE);
 	else
-		return (COLOR1);
+		return (VIOLET);
 }
-
-//int	get_light(int start, int end, double percentage)
-//{
-//	return ((int)((1 - percentage) * start + percentage * end));
-//}
-
-//int	get_color(t_point current, t_point start, t_point end, t_point delta)
-//{
-//	int		red;
-//	int		green;
-//	int		blue;
-//	double	per;
-//
-//	if (current.color == end.color)
-//		return (current.color);
-//	if (delta.x > delta.y)
-//		per = ft_percent(start.x, end.x, current.x);
-//	else
-//		per = ft_percent(start.y, end.y, current.y);
-//	red = get_light((start.color >> 16) & 0xFF, (end.color >> 16) & 0xFF, per);
-//	green = get_light((start.color >> 8) & 0xFF, (end.color >> 8) & 0xFF, per);
-//	blue = get_light(start.color & 0xFF, end.color & 0xFF, per);
-//	return ((red << 16) | (green << 8) | blue);
-//}

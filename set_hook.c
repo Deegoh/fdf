@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:07:53 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/08 11:49:38 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/09 13:27:52 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,9 @@ void	move(int keycode, t_fdf *fdf)
 void	scale(int keycode, t_fdf *fdf)
 {
 	if (keycode == Q)
-	{
 		fdf->cam.z -= 1;
-		if (fdf->cam.z < fdf->map.zmin)
-			fdf->map.zmin = fdf->cam.z;
-	}
 	if (keycode == E)
-	{
 		fdf->cam.z += 1;
-		if (fdf->map.zmax < fdf->cam.z)
-			fdf->map.zmax = fdf->cam.z;
-	}
 	if (keycode == R)
 		fdf->cam.scale += 1;
 	if (keycode == F)
@@ -48,7 +40,6 @@ void	reset(int keycode, t_fdf *fdf)
 {
 	if (keycode == SPACE)
 	{
-//		TODO reset z min and max
 		fdf->cam.yoffset = (1080 - fdf->map.ymax) / 2;
 		fdf->cam.xoffset = (1920 - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
 		fdf->cam.scale = SCALE;
@@ -73,17 +64,6 @@ void	rot(int keycode, t_fdf *fdf)
 		fdf->cam.gamma += 0.05;
 	if (keycode == O)
 		fdf->cam.gamma -= 0.05;
-}
-
-void	view(int keycode, t_fdf *fdf)
-{
-	if (keycode == P)
-	{
-		if (fdf->cam.view == isom)
-			fdf->cam.view = cart;
-		else
-			fdf->cam.view = isom;
-	}
 }
 
 int	key_hook(int keycode, t_fdf *fdf)

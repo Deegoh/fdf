@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpinto-m <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 19:05:37 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/09 11:47:04 by tpinto-m         ###   ########.fr       */
+/*   Created: 2022/03/09 12:42:16 by tpinto-m          #+#    #+#             */
+/*   Updated: 2022/03/09 12:45:41 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char	*str)
-{
-	int	i;
+#include "fdf.h"
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+char	*mlx_addr(void *img_ptr, int *bits, int *size, int *endian)
+{
+	return (mlx_get_data_addr(img_ptr, bits, size, endian));
 }
