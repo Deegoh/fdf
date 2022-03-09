@@ -32,7 +32,7 @@ all: $(NAME)
 $(NAME): libx libft $(OBJ)
 	$(CC) $(CFLAGS) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
 exec: clean all
-	./$(NAME) test_maps/basictest.fdf
+	./$(NAME) test_maps/42.fdf
 norm:
 	norminette $(SRC)
 libx:
