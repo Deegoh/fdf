@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/09 13:28:25 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:58:27 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	init_struct(t_fdf *fdf)
 	fdf->map.xmin = 0;
 	fdf->map.xmax = 0;
 	fdf->map.ymax = 0;
-	fdf->cam.x = 0;
 	fdf->cam.z = Z;
 	fdf->cam.xoffset = 0;
 	fdf->cam.yoffset = 0;
@@ -32,11 +31,13 @@ void	init_win(t_fdf *fdf, char *str)
 {
 	fdf->map.x = fdf->map.xmax + ft_abs(fdf->map.xmin) + SCALE * 4;
 	fdf->map.y = fdf->map.ymax + SCALE;
+	fdf->cam.d_scale = HEIGHT / (ft_abs(fdf->map.xmax) + ft_abs(fdf->map.xmin));
+	fdf->cam.scale = fdf->cam.d_scale;
 	fdf->mlx = mlx_init();
 	fdf->map.x = WIDTH;
 	fdf->map.y = HEIGHT;
 	fdf->cam.xoffset = (WIDTH - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
-	fdf->cam.yoffset = (HEIGHT - fdf->map.ymax) / 2;
+	fdf->cam.yoffset = (HEIGHT - fdf->map.ymax) / 4;
 	fdf->win = mlx_new_window(fdf->mlx, fdf->map.x, fdf->map.y, str);
 	fdf->img = mlx_new_image(fdf->mlx, fdf->map.x, fdf->map.y);
 	fdf->addr = mlx_addr(fdf->img, &fdf->bits, &fdf->line, &fdf->endian);

@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/09 14:40:27 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/10 15:08:12 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	put_pixel(t_fdf *fdf, int x, int y, int color)
 {
 	int	dst;
 
-	if (x <= WIDTH && x >= 0 && y <= HEIGHT && y >= 0)
+	if (x < WIDTH && x > 0 && y < HEIGHT && y > 0)
 	{
 		dst = (y * fdf->line + x * (fdf->bits / 8));
 		fdf->addr[dst] = color;

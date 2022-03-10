@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/09 14:34:31 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:38:20 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -37,9 +37,13 @@
 # define J 38
 # define L 37
 # define P 35
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_RIGHT 124
+# define KEY_LEFT 123
 
-# define SCALE 20
-# define Z 10
+# define SCALE 1
+# define Z 5
 # define HEIGHT 1080
 # define WIDTH 1920
 
@@ -79,6 +83,7 @@ typedef struct s_cam
 	int		xoffset;
 	int		yoffset;
 	int		scale;
+	int		d_scale;
 }	t_cam;
 
 typedef struct s_fdf
