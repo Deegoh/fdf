@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/10 16:58:27 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/11 13:45:57 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	set_xlen(t_fdf *fdf)
 			continue ;
 		if (fdf->map.map[i] == '\n')
 		{
+			printf("%d\n", xlen[j]);
 			j++;
 			continue ;
 		}
