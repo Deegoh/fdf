@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
+/*   By: tpinto-m <tpinto-m@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 15:53:06 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/02/21 13:44:48 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:50:45 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ int	get_value_map(const char *tmp, int *i)
 	}
 	else if (ft_atoi((tmp + *i)) == 0)
 		*i = *i + 1;
+	if (tmp[*i] == ',')
+		while (tmp[*i] != ' ')
+			*i = *i + 1;
+		
 	return (ret);
 }
 

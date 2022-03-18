@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
+/*   By: tpinto-m <tpinto-m@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/11 13:45:57 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/18 13:07:12 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ void	init_win(t_fdf *fdf, char *str)
 	fdf->map.y = fdf->map.ymax + SCALE;
 	fdf->cam.d_scale = HEIGHT / (ft_abs(fdf->map.xmax) + ft_abs(fdf->map.xmin));
 	fdf->cam.scale = fdf->cam.d_scale;
-	fdf->mlx = mlx_init();
+	// fdf->mlx = mlx_init();
 	fdf->map.x = WIDTH;
 	fdf->map.y = HEIGHT;
 	fdf->cam.xoffset = (WIDTH - (fdf->map.xmax + ft_abs(fdf->map.xmin))) / 2;
 	fdf->cam.yoffset = (HEIGHT - fdf->map.ymax) / 4;
-	fdf->win = mlx_new_window(fdf->mlx, fdf->map.x, fdf->map.y, str);
-	fdf->img = mlx_new_image(fdf->mlx, fdf->map.x, fdf->map.y);
-	fdf->addr = mlx_addr(fdf->img, &fdf->bits, &fdf->line, &fdf->endian);
+	(void)str;
+	// fdf->win = mlx_new_window(fdf->mlx, fdf->map.x, fdf->map.y, str);
+	// fdf->img = mlx_new_image(fdf->mlx, fdf->map.x, fdf->map.y);
+	// fdf->addr = mlx_addr(fdf->img, &fdf->bits, &fdf->line, &fdf->endian);
 }
 
 void	set_xlen(t_fdf *fdf)
@@ -52,13 +53,14 @@ void	set_xlen(t_fdf *fdf)
 	i = -1;
 	j = 0;
 	xlen = ft_calloc(sizeof(xlen), fdf->map.ylen);
+	printf("len map:%d\n", ft_strlen(fdf->map.map));
 	while (++i < ft_strlen(fdf->map.map))
 	{
 		if (fdf->map.map[i] == ' ')
 			continue ;
 		if (fdf->map.map[i] == '\n')
 		{
-			printf("%d\n", xlen[j]);
+			// printf("%d\n", xlen[j]);
 			j++;
 			continue ;
 		}
@@ -67,6 +69,9 @@ void	set_xlen(t_fdf *fdf)
 			i += ft_nbrlen(ft_atoi(&fdf->map.map[i])) - 1;
 			xlen[j]++;
 		}
+		if (fdf->map.map[i] == ',')
+			i = i + check_hex(fdf->map.map + i);
+		printf("i:%d\n", i);
 	}
 	fdf->map.xlen = check_xlen(xlen);
 	free(xlen);
