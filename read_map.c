@@ -6,7 +6,7 @@
 /*   By: tpinto-m <tpinto-m@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:44:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/18 16:44:53 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:33:26 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 char	*parse_line(char *gnl, t_fdf *fdf)
 {
-	int i;
-	int count;
-	static int test = 1;
+	int	i;
+	int	count;
 
 	if (!gnl)
 		return (NULL);
 	i = -1;
 	count = 1;
-	while(gnl[++i])
-		if(gnl[i] == ' ' && ft_isdigit(gnl[i + 1]))
+	while (gnl[++i])
+	{
+		if (gnl[i] == ' ' && i == 0)
+		{
+			while (gnl[i] == ' ')
+				i++;
+		}
+		if (gnl[i] == ' ' && ft_isalnum(gnl[i + 1]))
 			count++;
+		else if (gnl[i] == ' ' && gnl[i + 1] == '-' && ft_isalnum(gnl[i + 2]))
+			count++;
+	}
 	if (!fdf->map.xlen)
 		fdf->map.xlen = count;
 	if (fdf->map.xlen != count)
-	{
-		printf("gnl:\n%s", gnl);
-		printf("\nmap:\n%s", fdf->map.map);
-		printf("test%d\n", test);
-		printf("count%d\n", count);
-		printf("xlen%d\n", fdf->map.xlen);
 		display_err("error x len map");
-	}
-	test++;
 	fdf->map.ylen++;
 	return (gnl);
 }
@@ -69,20 +69,9 @@ int	check_hex(const char	*map)
 	int	i;
 
 	i = 0;
-	while (map[i] != ' ')
+	while (map[i] != ' ' && map[i] != '\0')
 	{
 		i++;
 	}
 	return (i);
-}
-
-int	check_xlen(int *xlen)
-{
-	// int	i;
-
-	// i = -1;
-	// while (xlen[++i])
-	// 	if (xlen[0] != xlen[i])
-	// 		display_err("error size map");
-	return (xlen[0]);
 }

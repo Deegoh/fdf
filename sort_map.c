@@ -6,7 +6,7 @@
 /*   By: tpinto-m <tpinto-m@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 15:53:06 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/18 16:50:45 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:40:23 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,22 @@ int	ft_nbrlen(int nbr)
 	return (i - 1);
 }
 
-int	get_value_map(const char *tmp, int *i)
+int	get_value_map(const char *tmp, long *i)
 {
 	int	ret;
 
-	if (!tmp)
+	if (!tmp || !(tmp + *i))
 		return (0);
 	ret = 0;
+	if (tmp[*i] == ',')
+		*i = *i + check_hex(tmp + *i);
 	while (tmp[*i] == ' ')
 		*i = *i + 1;
 	if (tmp[*i] == '\n')
 		*i = *i + 1;
-	if (ft_atoi((tmp + *i)))
-	{
+	if (ft_atoi(tmp + *i))
 		ret = ft_atoi((tmp + *i));
-		*i = *i + ft_nbrlen(ret);
-	}
-	else if (ft_atoi((tmp + *i)) == 0)
-		*i = *i + 1;
-	if (tmp[*i] == ',')
-		while (tmp[*i] != ' ')
-			*i = *i + 1;
-		
+	*i = *i + ft_nbrlen(ret);
 	return (ret);
 }
 
@@ -68,10 +62,10 @@ int	check_z(int value, t_fdf *fdf)
 
 void	process_map(t_fdf *fdf)
 {
-	int	**new_map;
-	int	i;
-	int	j;
-	int	k;
+	int		**new_map;
+	int		i;
+	int		j;
+	long	k;
 
 	new_map = malloc(fdf->map.ylen * sizeof(int *));
 	if (!new_map)

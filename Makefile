@@ -12,10 +12,11 @@ SRC = fdf.c\
 	  projection.c\
 	  color.c\
 	  rm.c\
+	  line.c\
 	  mlx.c
 OBJ = $(SRC:.c=.o)
 
-MAP_DIR = test_maps/
+MAP_DIR = maps/
 
 MINILIBX_DIR = ./minilibx_macos/
 
@@ -31,8 +32,8 @@ all: $(NAME)
 
 $(NAME): libx libft $(OBJ)
 	$(CC) $(CFLAGS) $(LIB) $(INCLUDES) $(FRAMEWORK) $(OBJ) -o $(NAME)
-exec: clean all
-	./$(NAME) test_maps/elem-col.fdf
+exec: all
+	./$(NAME) $(MAP_DIR)/elem-col.fdf
 norm:
 	norminette $(SRC)
 libx:
@@ -41,11 +42,11 @@ libft:
 	@$(MAKE) -sC $(LIBFT_DIR)
 clean:
 	rm -rf $(OBJ)
-#	@$(MAKE) -sC $(MINILIBX_DIR) clean
-#	@$(MAKE) -sC $(LIBFT_DIR) clean
+	@$(MAKE) -sC $(MINILIBX_DIR) clean
+	@$(MAKE) -sC $(LIBFT_DIR) clean
 fclean: clean
 	rm -rf $(NAME)
-	@#$(MAKE) -sC $(LIBFT_DIR) fclean
+	@$(MAKE) -sC $(LIBFT_DIR) fclean
 
 re: fclean all
 

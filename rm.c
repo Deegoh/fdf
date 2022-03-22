@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 11:54:16 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/09 12:52:30 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:22:22 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,22 @@ void	rm_wire(t_fdf *fdf)
 		}
 	}
 	rm_finish_wire(fdf);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
+}
+
+void	rm_one_line(t_fdf *fdf)
+{
+	int		i;
+	t_coor	pts;
+
+	i = -1;
+	while (++i < fdf->map.xlen - 1)
+	{
+		pts.b = new_pts(i, 1, fdf->map.wire[0][i], fdf);
+		pts.e = new_pts(i + 1, 1, fdf->map.wire[0][i + 1], fdf);
+		rot_all(fdf, &pts);
+		isocoor(fdf, &pts);
+		put_line(fdf, pts.b, pts.e, BLACK);
+	}
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }

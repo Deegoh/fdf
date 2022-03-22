@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/10 16:38:20 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:19:39 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -113,7 +113,7 @@ typedef struct s_coor
 }	t_coor;
 
 int		ft_nbrlen(int nbr);
-int		get_value_map(const char *tmp, int *i);
+int		get_value_map(const char *tmp, long *i);
 int		check_z(int value, t_fdf *fdf);
 void	process_map(t_fdf *fdf);
 
@@ -124,7 +124,7 @@ void	rot(int keycode, t_fdf *fdf);
 int		key_hook(int keycode, t_fdf *fdf);
 
 void	read_map(char *file, t_fdf *fdf);
-int		check_xlen(int *xlen);
+int		check_hex(const char	*map);
 
 void	init_struct(t_fdf *fdf);
 void	init_win(t_fdf *fdf, char *str);
@@ -159,6 +159,9 @@ int		get_default_color(int z, t_fdf *fdf);
 
 void	rm_wire(t_fdf *fdf);
 void	rm_finish_wire(t_fdf *fdf);
+void	rm_one_line(t_fdf *fdf);
+
+void	put_one_line(t_fdf *fdf);
 
 char	*mlx_addr(void *img_ptr, int *bits, int *size, int *endian);
 
