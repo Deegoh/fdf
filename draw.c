@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:10:01 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/22 16:14:48 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/23 17:21:15 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,26 @@ void	put_line(t_fdf *fdf, t_point b, t_point e, int color)
 	}
 }
 
+t_coor	new_coor1(int i, int j, t_fdf *fdf)
+{
+	t_coor	pts;
+
+	pts.b = new_pts(i, j + 1, fdf->map.wire[j][i][0], fdf);
+	pts.e = new_pts(i + 1, j + 1, fdf->map.wire[j][i + 1][0], fdf);
+	pts.b.color = fdf->map.wire[j][i][1];
+	return (pts);
+}
+
+t_coor	new_coor2(int i, int j, t_fdf *fdf)
+{
+	t_coor	pts;
+
+	pts.b = new_pts(i, j + 1, fdf->map.wire[j][i][0], fdf);
+	pts.e = new_pts(i, j + 2, fdf->map.wire[j + 1][i][0], fdf);
+	pts.b.color = fdf->map.wire[j][i][1];
+	return (pts);
+}
+
 void	put_lastwire(t_fdf *fdf)
 {
 	int		i;
@@ -82,13 +102,11 @@ void	put_lastwire(t_fdf *fdf)
 		i = -1;
 		while (++i < len.x)
 		{
-			pts.b = new_pts(i, len.y + 1, fdf->map.wire[len.y][i], fdf);
-			pts.e = new_pts(i + 1, len.y + 1, fdf->map.wire[len.y][i + 1], fdf);
+			pts = new_coor1(i, len.y, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
 			put_line(fdf, pts.b, pts.e, pts.b.color);
-			pts.b = new_pts(len.x, j + 1, fdf->map.wire[j][len.x], fdf);
-			pts.e = new_pts(len.x, j + 2, fdf->map.wire[j + 1][len.x], fdf);
+			pts = new_coor2(len.x, j, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
 			put_line(fdf, pts.b, pts.e, pts.b.color);
@@ -108,13 +126,11 @@ void	put_wire(t_fdf *fdf)
 		i = -1;
 		while (++i < fdf->map.xlen - 1)
 		{
-			pts.b = new_pts(i, j + 1, fdf->map.wire[j][i], fdf);
-			pts.e = new_pts(i + 1, j + 1, fdf->map.wire[j][i + 1], fdf);
+			pts = new_coor1(i, j, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
 			put_line(fdf, pts.b, pts.e, pts.b.color);
-			pts.b = new_pts(i, j + 1, fdf->map.wire[j][i], fdf);
-			pts.e = new_pts(i, j + 2, fdf->map.wire[j + 1][i], fdf);
+			pts = new_coor2(i, j, fdf);
 			rot_all(fdf, &pts);
 			isocoor(fdf, &pts);
 			put_line(fdf, pts.b, pts.e, pts.b.color);

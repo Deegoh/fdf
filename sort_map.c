@@ -6,7 +6,7 @@
 /*   By: tpinto-m <tpinto-m@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 15:53:06 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/22 16:40:23 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/23 17:31:17 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,26 @@ int	check_z(int value, t_fdf *fdf)
 		fdf->map.zmax = value;
 	return (value);
 }
+void	add_zcolor(int **map, int z)
+{
+	int	color;
+
+	color = 16777215;
+	*map = malloc(sizeof(int) * 2);
+	if (!*map)
+		return ;
+	map[0] = &z;
+	map[1] = &color;
+}
 
 void	process_map(t_fdf *fdf)
 {
-	int		**new_map;
+	int		***new_map;
 	int		i;
 	int		j;
 	long	k;
 
-	new_map = malloc(fdf->map.ylen * sizeof(int *));
+	new_map = malloc(fdf->map.ylen * sizeof(int **));
 	if (!new_map)
 		return ;
 	j = 0;
@@ -75,11 +86,14 @@ void	process_map(t_fdf *fdf)
 	while (j < fdf->map.ylen)
 	{
 		i = 0;
-		new_map[j] = malloc(fdf->map.xlen * sizeof(int));
+		new_map[j] = malloc(fdf->map.xlen * sizeof(int *));
 		if (!new_map[j])
 			return ;
 		while (i < fdf->map.xlen)
-			new_map[j][i++] = check_z(get_value_map(fdf->map.map, &k), fdf);
+		{
+			add_zcolor(&new_map[i][j], check_z(get_value_map(fdf->map.map, &k), fdf));
+//			new_map[j][i][0] = check_z(get_value_map(fdf->map.map, &k), fdf);
+		}
 		j++;
 	}
 	fdf->map.wire = new_map;

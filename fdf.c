@@ -6,7 +6,7 @@
 /*   By: tpinto-m <tpinto-m@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 15:58:40 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/22 16:19:48 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/23 17:19:19 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,12 @@ int	main(int ac, char *av[])
 		display_err("Too much files");
 	if (ac == 2)
 	{
-		fdf.map.xlen = 0;
-		fdf.map.ylen = 0;
-		fdf.map.zmin = 0;
-		fdf.map.zmax = 0;
+		init_struct(&fdf);
 		read_map(av[1], &fdf);
 		process_map(&fdf);
-		init_struct(&fdf);
 		search_values(&fdf);
+		printf("hex[%x]\n", 0x00FFFFFF);
+		printf("hexToD[%d]\n", 0x00FFFFFF);
 		init_win(&fdf, "Hello fdf!");
 		if (fdf.map.ylen == 1)
 			put_one_line(&fdf);

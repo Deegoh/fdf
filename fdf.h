@@ -6,7 +6,7 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 18:56:17 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/22 16:19:39 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/23 17:12:05 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -54,6 +54,7 @@
 # define BLUE 0x000000F9
 # define VIOLET 0x0086007D
 # define BLACK 0x00000000
+# define WHITE 0x00FFFFFF
 
 enum e_proj{isom, cart};
 
@@ -61,7 +62,7 @@ typedef struct s_map {
 	int		x;
 	int		y;
 	char	*map;
-	int		**wire;
+	int		***wire;
 	int		xlen;
 	int		ylen;
 	int		xmin;

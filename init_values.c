@@ -6,7 +6,7 @@
 /*   By: tpinto-m <tpinto-m@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 11:42:52 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/03/22 16:14:48 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/03/23 17:12:05 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	init_struct(t_fdf *fdf)
 {
+	fdf->map.xlen = 0;
+	fdf->map.ylen = 0;
+	fdf->map.zmin = 0;
+	fdf->map.zmax = 0;
 	fdf->map.xmin = 0;
 	fdf->map.xmax = 0;
 	fdf->map.ymax = 0;
@@ -59,7 +63,7 @@ void	search_values(t_fdf *fdf)
 		{
 			b.x = i * SCALE;
 			b.y = j * SCALE;
-			b.z = fdf->map.wire[j][i] * fdf->cam.z;
+			b.z = fdf->map.wire[j][i][0] * fdf->cam.z;
 			iso(&b, 0, 0, fdf->cam.view);
 			fdf->map.xmin = ft_min(b.x, fdf->map.xmin);
 			fdf->map.xmax = ft_max(b.x, fdf->map.xmax);
